@@ -1,5 +1,7 @@
 package boards;
 
+import utils.IReader;
+
 class Dimension implements Validable {
 
     private int value;
@@ -12,7 +14,7 @@ class Dimension implements Validable {
         this.value = val;
     }
 
-    public boolean isValid(){
+    boolean isValid(){
         if (this.value <= 0){
             return false;
         }
@@ -25,5 +27,9 @@ class Dimension implements Validable {
 
     void setValue(int value) {
         this.value = value;
+    }
+
+    static Dimension read(IReader r){
+        return new Dimension(r.readInt());
     }
 }

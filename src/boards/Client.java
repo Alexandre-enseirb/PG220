@@ -1,6 +1,8 @@
 package boards;
 
 import java.util.ArrayList;
+import utils;
+import utils.IReader;
 
 class Client extends Actor {
 
@@ -33,8 +35,8 @@ class Client extends Actor {
         while(r.hasNext()){
             if (r.localName().equals("client"))
                 this.id=r.readInt();
-            if (r.localName().equals("planche"))
-                this.boards.add(BoardData.readBoard(r));
+            if (r.localName().equals("board"))
+                this.boards.add(BoardData.readBoard(r, true));
 
         }
 

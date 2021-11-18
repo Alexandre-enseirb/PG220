@@ -1,5 +1,7 @@
 package boards;
 
+import utils.IReader;
+
 class Date implements Validable {
     private int day;
     private int month;
@@ -20,7 +22,7 @@ class Date implements Validable {
         this.year=year;
     }
 
-    public boolean isValid(){
+    boolean isValid(){
         /* year must be between 1970 (epoch) and 2030 (no commands after) */
         boolean leap=false; /* is it a leap year ? */
         int maxdays;
@@ -45,5 +47,9 @@ class Date implements Validable {
         /* finally */
         return true;
     }
-
+    static Date readDate(IReader r){
+        int[] dateVal = new int[3];
+        dateVal = r.readDate();
+        Date d = new Date(dateVal[0], dateVal[1], dateVal[2]);
+    }
 }

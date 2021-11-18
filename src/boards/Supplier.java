@@ -1,5 +1,7 @@
 package boards;
 
+import utils.IReader;
+
 import java.util.ArrayList;
 
 class Supplier extends Actor{
@@ -29,6 +31,21 @@ class Supplier extends Actor{
         b.setAmountValue(b.getAmount().getValue() - a.getValue());
     }
 
+    /**
+     * will probably change, supposed to load a client
+     * @param r
+     */
+    void loadSupplier(IReader r){
+        this.boards = new ArrayList<BoardData>();
+        while(r.hasNext()){
+            if (r.localName().equals("supplier"))
+                this.id=r.readInt();
+            if (r.localName().equals("board"))
+                this.boards.add(BoardData.readBoard(r, false));
 
+        }
+
+
+    }
 
 }

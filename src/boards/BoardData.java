@@ -1,6 +1,7 @@
 package boards;
 
 import java.util.ArrayList;
+import utils.IReader;
 
 abstract class BoardData {
 
@@ -86,10 +87,10 @@ abstract class BoardData {
         ClientBoard board = new ClientBoard(); // will be returned as BoardData, but instantiated as ClientBoard
                                                // in order to set Validated and Shape
         board.id = r.readInt();
-        board.amount=r.readInt();
-        board.date=r.readDate();
-        board.length=r.readInt();
-        board.width = r.readInt();
+        board.amount=Amount.read();
+        board.date=Date.readDate();
+        board.length=Dimension.read();
+        board.width = Dimension.read();
         if (clientBoard) {
             board.shape = Polygon.readPolygon(r);
             board.setValidated(false);

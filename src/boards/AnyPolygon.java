@@ -22,4 +22,8 @@ class AnyPolygon extends Polygon {
         }
         return true;
     }
+
+    boolean overlaps(Polygon p){
+        return false; // TODO
+    }
 }

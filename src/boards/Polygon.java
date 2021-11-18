@@ -1,8 +1,10 @@
 package boards;
 
 
-import java.util.ArrayList;
+import utils.IReader;
 
+import java.util.ArrayList;
+import utils.IReader;
 abstract class Polygon {
 
     private ArrayList<Point> points;

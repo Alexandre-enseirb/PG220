@@ -1,5 +1,7 @@
 package boards;
 
+import utils.IReader;
+
 class Amount implements Validable {
 
     private int value;
@@ -19,8 +21,11 @@ class Amount implements Validable {
         return true;
     }
 
-    public int getValue(){
+    int getValue(){
         return this.value;
     }
 
+    static Amount read(IReader r){
+        return new Amount(r.readInt());
+    }
 }
