@@ -18,12 +18,11 @@ class Price implements Validable {
         }
         return true;
     }
-
-    public double getValue() {
+    double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    void setValue(double value) {
         this.value = value;
 
     }

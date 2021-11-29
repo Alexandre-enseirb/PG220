@@ -25,7 +25,7 @@ class Amount implements Validable {
         return this.value;
     }
 
-    public void setValue(int value) {
+    void setValue(int value) {
         this.value = value;
     }
 

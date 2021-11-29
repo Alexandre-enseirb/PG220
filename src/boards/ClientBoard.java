@@ -9,7 +9,7 @@ class ClientBoard extends BoardData {
         super(0,0,"00.00.00",0, new Dimension(0), new Dimension(0));
     }
 
-    public ClientBoard(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+     ClientBoard(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
         super(id,amount,date,price,length,width);
     }
 
@@ -18,7 +18,7 @@ class ClientBoard extends BoardData {
         return validated;
     }
 
-    public void setValidated(boolean validated) {
+    void setValidated(boolean validated) {
         this.validated = validated;
     }
 }
