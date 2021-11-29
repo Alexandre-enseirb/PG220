@@ -13,7 +13,7 @@ abstract class BoardData implements IGenerable{
 
     private ArrayList<Validable> listV;
 
-    public BoardData(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+    BoardData(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
         this.id = id;
         String[] array = date.split("\\.");
         this.date = new Date();

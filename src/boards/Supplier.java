@@ -8,7 +8,7 @@ class Supplier extends Actor{
 
     Supplier(){
         this.id=0;
-        this.boards = new ArrayList<>();
+        this.boards = new ArrayList<BoardData>();
     }
 
     Supplier(int id,ArrayList<BoardData> boards){

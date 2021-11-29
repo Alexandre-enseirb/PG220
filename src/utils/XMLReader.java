@@ -22,8 +22,8 @@ class XMLReader implements IReader {
             //int evt = 0;
             while (r.hasNext()) {
                 if (r.getEventType()==1) { //XMLStreamConstants.START_ELEMENT
-                    if (r.getName().toString() == "client") {
-                        lesUsers.add(readClient(f,r));
+                    if (r.getName().toString() == "client" || r.getName().toString() == "fournisseur") {
+                        lesUsers.add(readUsers(f,r));
                     } else {
                         r.next();
                     }
@@ -39,24 +39,24 @@ class XMLReader implements IReader {
         return lesUsers;
     }
 
-    public IGenerable readClient(IFactory f, XMLStreamReader r) {
+    public IGenerable readUsers(IFactory f, XMLStreamReader r) {
         int id = Integer.parseInt(r.getAttributeValue(0));
         ArrayList<IGenerable> listplanche = new ArrayList<>();
         IGenerable c = null;
-        System.out.println("reading Client"+id);
+
         try {
             while (r.hasNext()) {
 
                 if (r.next() == XMLStreamConstants.START_ELEMENT)
                 {
-                    // System.out.println("reading Client"+id);
-                    if (r.getName().toString() == "planche"){
+
+                    if (r.getName().toString() == "planche" || r.getName().toString() == "panneau"){
 
                         IGenerable p = readPlanche(f,r);
                         listplanche.add(p);
 
                     }else{
-                        System.out.println("my id is "+id);
+
                         c = f.generatePeople(id,listplanche);
                         return c;
                     }
@@ -84,7 +84,7 @@ class XMLReader implements IReader {
         double prix = Double.parseDouble(r.getAttributeValue(3));
         ArrayList<IGenerable> dim = null;
         IGenerable p = null;
-        //System.out.println("reading planche"+ id);
+
         try {
             while (r.hasNext()){
                 if(r.next() == XMLStreamConstants.START_ELEMENT){
