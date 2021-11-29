@@ -1,11 +1,14 @@
 package utils;
 
-public interface IReader {
-    public String read();
-    public String localName();
-    public int readInt();
-    public boolean hasNext();
+import boards.IFactory;
+import boards.IGenerable;
 
-    public int[3] readDate();
+import java.util.ArrayList;
+
+public interface IReader {
+    public ArrayList<IGenerable> read(IFactory f, String filename);
+    static IReader InstantiateXMLReader(){
+        return  new XMLReader();
+    }
 
 }

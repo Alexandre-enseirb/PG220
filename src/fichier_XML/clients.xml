@@ -1,0 +1,51 @@
+<clients>
+  <client id="0">
+    <planche id="0" nombre="10" date="12.10.23" prix="6000.00">
+      <dim L="70.00" l="60.00" />
+    </planche>
+    <planche id="1" nombre="20" date="27.04.22" prix="5000.00">
+      <dim L="30.00" l="30.00" />
+    </planche>
+    <planche id="2" nombre="12" date="30.12.21" prix="6000.00">
+      <dim L="50.00" l="20.00" />
+    </planche>
+  </client>
+  <client id="1">
+    <planche id="0" nombre="7" date="02.05.22" prix="5000.00">
+      <dim L="50.00" l="50.00" />
+    </planche>
+    <planche id="1" nombre="5" date="25.02.22" prix="6000.00">
+      <dim L="100.00" l="50.00" />
+    </planche>
+  </client>
+  <client id="2">
+    <planche id="0" nombre="15" date="03.03.22" prix="4500.00">
+      <dim L="60.00" l="40.00" />
+    </planche>
+    <planche id="1" nombre="10" date="14.08.23" prix="4200.00">
+      <dim L="100.00" l="20.00" />
+    </planche>
+    <planche id="2" nombre="5" date="05.04.22" prix="3500.00">
+      <dim L="100.00" l="100.00" />
+    </planche>
+    <planche id="3" nombre="3" date="17.02.23" prix="4000.00">
+      <dim L="150.00" l="40.00" />
+    </planche>
+  </client>
+  <client id="3">
+    <planche id="0" nombre="40" date="14.05.22" prix="6000.00">
+      <dim L="30.00" l="15.00" />
+    </planche>
+  </client>
+  <client id="4">
+    <planche id="0" nombre="10" date="14.06.23" prix="3000.00">
+      <dim L="50.00" l="40.00" />
+    </planche>
+    <planche id="1" nombre="5" date="04.05.23" prix="5000.00">
+      <dim L="50.00" l="100.00" />
+    </planche>
+    <planche id="2" nombre="3" date="16.05.22" prix="9500.00">
+      <dim L="120.00" l="60.00" />
+    </planche>
+  </client>
+</clients>

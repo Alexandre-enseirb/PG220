@@ -2,13 +2,13 @@ package boards;
 
 class Price implements Validable {
 
-    private int value;
+    private double value;
 
     Price(){
         this.value = 0;
     }
 
-    Price(int val){
+    Price(double val){
         this.value = val;
     }
 
@@ -17,5 +17,13 @@ class Price implements Validable {
             return false;
         }
         return true;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 }

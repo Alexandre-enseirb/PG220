@@ -25,7 +25,7 @@ class Amount implements Validable {
         return this.value;
     }
 
-    static Amount read(IReader r){
-        return new Amount(r.readInt());
+    public void setValue(int value) {
+        this.value = value;
     }
 }

@@ -3,7 +3,7 @@ package boards;
 import java.util.ArrayList;
 import utils.IReader;
 
-abstract class BoardData {
+abstract class BoardData implements IGenerable{
 
     int id;
     Date date;
@@ -14,8 +14,18 @@ abstract class BoardData {
 
     private ArrayList<Validable> listV;
 
-
-
+    public BoardData(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+        this.id = id;
+        String[] array = date.split("\\.");
+        this.date = new Date();
+        this.date.setDay(Integer.parseInt(array[0]));
+        this.date.setMonth(Integer.parseInt(array[1]));
+        this.date.setYear(Integer.parseInt(array[2]));
+        this.amount= new Amount(amount);
+        this.price = new Price(price);
+        this.length = (Dimension) length;
+        this.width = (Dimension) width;
+    }
 
     boolean allValid(){
         for(Validable v : listV){
@@ -62,7 +72,7 @@ abstract class BoardData {
     }
 
     Dimension getLength() {
-        return length;
+        return (Dimension) length;
     }
 
     void setLength(Dimension length) {
@@ -70,7 +80,7 @@ abstract class BoardData {
     }
 
     Dimension getWidth() {
-        return width;
+        return (Dimension) width;
     }
 
     void setWidth(Dimension width) {
@@ -83,18 +93,5 @@ abstract class BoardData {
      * @param clientBoard
      * @return
      */
-    static BoardData readBoard(IReader r, boolean clientBoard){
-        ClientBoard board = new ClientBoard(); // will be returned as BoardData, but instantiated as ClientBoard
-                                               // in order to set Validated and Shape
-        board.id = r.readInt();
-        board.amount=Amount.read();
-        board.date=Date.readDate();
-        board.length=Dimension.read();
-        board.width = Dimension.read();
-        if (clientBoard) {
-            board.shape = Polygon.readPolygon(r);
-            board.setValidated(false);
-        }
-        return (BoardData) board;
-    }
+
 }

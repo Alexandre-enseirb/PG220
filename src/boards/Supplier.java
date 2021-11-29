@@ -22,6 +22,7 @@ class Supplier extends Actor{
             if (b.shape.fitsOnBoard(sb))
                 ret.add(sb);
         }
+        return ret;
     }
 
     void buy(BoardData b, Amount a) throws NotEnoughBoardsException {
@@ -35,17 +36,6 @@ class Supplier extends Actor{
      * will probably change, supposed to load a client
      * @param r
      */
-    void loadSupplier(IReader r){
-        this.boards = new ArrayList<BoardData>();
-        while(r.hasNext()){
-            if (r.localName().equals("supplier"))
-                this.id=r.readInt();
-            if (r.localName().equals("board"))
-                this.boards.add(BoardData.readBoard(r, false));
 
-        }
-
-
-    }
 
 }

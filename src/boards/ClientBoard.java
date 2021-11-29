@@ -5,7 +5,7 @@ class ClientBoard extends BoardData {
     private boolean validated;
     Polygon shape;
 
-    ClientBoard(){
+  /*  ClientBoard(){
         this.id=0;
         this.date=new Date();
         this.width = new Dimension();
@@ -13,17 +13,10 @@ class ClientBoard extends BoardData {
         this.price = new Price();
         this.amount = new Amount();
         this.shape = AnyPolygon();
-    }
+    }*/
 
-    ClientBoard(int id, Date d, Amount a, Price p,
-                Dimension l, Dimension w, Polygon shape){
-        this.id=id;
-        this.date=d;
-        this.amount=a;
-        this.price=p;
-        this.length=l;
-        this.width=w;
-        this.shape = shape;
+    public ClientBoard(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+        super(id,amount,date,price,length,width);
     }
 
     public boolean isValidated() {

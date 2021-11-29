@@ -26,10 +26,5 @@ abstract class Polygon {
      * @param r
      * @return
      */
-    static Polygon readPolygon(IReader r){
-        ArrayList<Point> points = new ArrayList<>();
-        while (r.localName().equals("shape")){
-            points.add(new Point(r.readInt(), r.readInt()));
-        }
-    }
+
 }

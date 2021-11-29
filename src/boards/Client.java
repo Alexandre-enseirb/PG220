@@ -1,7 +1,6 @@
 package boards;
 
 import java.util.ArrayList;
-import utils;
 import utils.IReader;
 
 class Client extends Actor {
@@ -30,17 +29,6 @@ class Client extends Actor {
      * will probably change, supposed to load a client
      * @param r
      */
-    void loadClient(IReader r){
-        this.boards = new ArrayList<BoardData>();
-        while(r.hasNext()){
-            if (r.localName().equals("client"))
-                this.id=r.readInt();
-            if (r.localName().equals("board"))
-                this.boards.add(BoardData.readBoard(r, true));
 
-        }
-
-
-    }
 
 }

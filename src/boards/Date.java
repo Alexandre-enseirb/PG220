@@ -9,6 +9,30 @@ class Date implements Validable {
 
     private int[] monthlen = {31,28,31,30,31,30,31,31,30,31,30,31};
 
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     Date(){
         /* By default : first valid date */
         this.day=1;
@@ -16,13 +40,14 @@ class Date implements Validable {
         this.year=1970;
     }
 
+
     Date(int day, int month, int year){
         this.day=day;
         this.month=month;
         this.year=year;
     }
 
-    boolean isValid(){
+    public boolean isValid(){
         /* year must be between 1970 (epoch) and 2030 (no commands after) */
         boolean leap=false; /* is it a leap year ? */
         int maxdays;
@@ -47,9 +72,5 @@ class Date implements Validable {
         /* finally */
         return true;
     }
-    static Date readDate(IReader r){
-        int[] dateVal = new int[3];
-        dateVal = r.readDate();
-        Date d = new Date(dateVal[0], dateVal[1], dateVal[2]);
-    }
+
 }
