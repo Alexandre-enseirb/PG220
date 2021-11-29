@@ -6,10 +6,10 @@ class ClientBoard extends BoardData {
     Polygon shape;
 
     ClientBoard(){
-        super(0,0,"00.00.00",0, new Dimension(0), new Dimension(0));
+        super(0,0,"00.00.00",0, 0, 0);
     }
 
-     ClientBoard(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+     ClientBoard(int id, int amount, String date,double price,double length,double width) {
         super(id,amount,date,price,length,width);
     }
 

@@ -13,17 +13,17 @@ class XMLReader implements IReader {
     private XMLStreamReader r;
 
     @Override
-    public ArrayList<IGenerable> read(IFactory f, String filename) {
+    public ArrayList<ArrayList<Object>> read(String filename) {
         FileInputStream file = null;
-        ArrayList<IGenerable> lesUsers = new ArrayList<>();
+        ArrayList<ArrayList<Object>> lesUsers = new ArrayList<>();
         try {
             file = new FileInputStream(filename);
             r = XMLInputFactory.newInstance().createXMLStreamReader(file);
-            //int evt = 0;
+
             while (r.hasNext()) {
                 if (r.getEventType()==1) { //XMLStreamConstants.START_ELEMENT
                     if (r.getName().toString() == "client" || r.getName().toString() == "fournisseur") {
-                        lesUsers.add(readUsers(f,r));
+                        lesUsers.add(readUsers(r));
                     } else {
                         r.next();
                     }
@@ -39,9 +39,12 @@ class XMLReader implements IReader {
         return lesUsers;
     }
 
-    public IGenerable readUsers(IFactory f, XMLStreamReader r) {
-        int id = Integer.parseInt(r.getAttributeValue(0));
-        ArrayList<IGenerable> listplanche = new ArrayList<>();
+    public ArrayList<Object> readUsers(XMLStreamReader r) {
+        ArrayList<Object> Users = new ArrayList<>();
+
+
+        Users.add(r.getAttributeValue(0));
+
         IGenerable c = null;
 
         try {
@@ -52,13 +55,13 @@ class XMLReader implements IReader {
 
                     if (r.getName().toString() == "planche" || r.getName().toString() == "panneau"){
 
-                        IGenerable p = readPlanche(f,r);
-                        listplanche.add(p);
+                        ArrayList<String> p = readPlanche(r);
+                        Users.add(p);
 
                     }else{
 
-                        c = f.generatePeople(id,listplanche);
-                        return c;
+
+                        return Users;
                     }
 
 
@@ -72,27 +75,29 @@ class XMLReader implements IReader {
 
         }
 
-        c = f.generatePeople(id,listplanche);
-        return c;
+        //c = f.generatePeople(id,listplanche);
+        return Users;
 
     }
 
-    public IGenerable readPlanche(IFactory f,XMLStreamReader r){
-        int id =Integer.parseInt(r.getAttributeValue(0));
-        int nbr = Integer.parseInt(r.getAttributeValue(1));
-        String date = r.getAttributeValue(2);
-        double prix = Double.parseDouble(r.getAttributeValue(3));
-        ArrayList<IGenerable> dim = null;
-        IGenerable p = null;
+    public ArrayList<String> readPlanche(XMLStreamReader r){
 
+        ArrayList<String> p = new ArrayList<>();
+
+        int id =Integer.parseInt(r.getAttributeValue(0));
+        p.add(r.getAttributeValue(0));
+        p.add(r.getAttributeValue(1));
+        p.add(r.getAttributeValue(2));
+        p.add(r.getAttributeValue(3));
         try {
             while (r.hasNext()){
                 if(r.next() == XMLStreamConstants.START_ELEMENT){
 
                     if("dim".equalsIgnoreCase(r.getLocalName())){
-                        dim = readDim(f,r);
+                        p.add(r.getAttributeValue(0));
+                        p.add(r.getAttributeValue(1));
                     }
-                    p = f.generatePlanche(id,nbr,date,prix,dim.get(0),dim.get(1));
+
                     return p;
                 }
                 //r.next();
@@ -100,20 +105,11 @@ class XMLReader implements IReader {
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
-        p = f.generatePlanche(id,nbr,date,prix,dim.get(0),dim.get(1));
+
         return p;
     }
 
-    ArrayList<IGenerable> readDim(IFactory f,XMLStreamReader r){
-        double len = Double.parseDouble(r.getAttributeValue(0));
-        double wid = Double.parseDouble(r.getAttributeValue(1));
-        IGenerable c1 =  f.generateDim(len);
-        IGenerable c2 = f.generateDim(wid);
-        ArrayList<IGenerable> dim = new ArrayList<>();
-        dim.add(c1);
-        dim.add(c2);
-        return dim;
-    }
+
 
 
     XMLReader() {

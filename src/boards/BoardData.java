@@ -2,7 +2,7 @@ package boards;
 
 import java.util.ArrayList;
 
-abstract class BoardData implements IGenerable{
+abstract class BoardData{
 
     int id;
     Date date;
@@ -13,7 +13,7 @@ abstract class BoardData implements IGenerable{
 
     private ArrayList<Validable> listV;
 
-    BoardData(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
+    BoardData(int id, int amount, String date,double price, double length, double width) {
         this.id = id;
         String[] array = date.split("\\.");
         this.date = new Date();
@@ -22,8 +22,8 @@ abstract class BoardData implements IGenerable{
         this.date.setYear(Integer.parseInt(array[2]));
         this.amount= new Amount(amount);
         this.price = new Price(price);
-        this.length = (Dimension) length;
-        this.width = (Dimension) width;
+        this.length = new Dimension(length);
+        this.width =  new Dimension(width);
     }
 
 

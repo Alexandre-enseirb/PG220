@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public interface IReader {
-    public ArrayList<IGenerable> read(IFactory f, String filename);
+    public ArrayList<ArrayList<Object>> read(String filename);
     static IReader InstantiateXMLReader(){
         return  new XMLReader();
     }

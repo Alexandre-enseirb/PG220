@@ -2,7 +2,7 @@ package boards;
 
 import utils.IReader;
 
-class Dimension implements Validable ,IGenerable{
+class Dimension implements Validable{
 
     private double value;
 
