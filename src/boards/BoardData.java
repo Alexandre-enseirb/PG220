@@ -1,7 +1,6 @@
 package boards;
 
 import java.util.ArrayList;
-import utils.IReader;
 
 abstract class BoardData implements IGenerable{
 
@@ -34,6 +33,13 @@ abstract class BoardData implements IGenerable{
         }
         return true;
     }
+
+    /*boolean validForBoard(BoardData b) throws InvalidBoardException {
+        if (!this.allValid() || !b.allValid()){
+            throw new InvalidBoardException();
+        }
+        if (this.getDate().)
+    }*/
 
     int getId() {
         return id;
@@ -87,11 +93,5 @@ abstract class BoardData implements IGenerable{
         this.width = width;
     }
 
-    /**
-     * reads all the fields needed to create a board
-     * @param r
-     * @param clientBoard
-     * @return
-     */
 
 }

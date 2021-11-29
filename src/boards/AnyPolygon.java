@@ -5,14 +5,14 @@ import java.util.ArrayList;
 class AnyPolygon extends Polygon {
 
     AnyPolygon(){
+        this.points = new ArrayList<Point>();
         this.addPoint(new Point(0,0));
         this.addPoint(new Point(1,1));
     }
 
     AnyPolygon(ArrayList<Point> points){
-        for (Point p : points){
-            this.addPoint(p);
-        }
+        this.points = points;
+
     }
 
     boolean fitsOnBoard(BoardData b){

@@ -73,4 +73,20 @@ class Date implements Validable {
         return true;
     }
 
+    boolean comesAfter(Date d){
+        if (this.year > d.getYear())
+            return true;
+        if (this.month > d.getMonth())
+            return true;
+        if (this.day > d.getDay())
+            return true;
+        return false;
+    }
+
+    public String toString(){
+        return Integer.toString(this.day)+
+                "."+Integer.toString(this.month)+
+                "."+Integer.toString(this.year);
+    }
+
 }

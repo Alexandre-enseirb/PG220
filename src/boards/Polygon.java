@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import utils.IReader;
 abstract class Polygon {
 
-    private ArrayList<Point> points;
+    ArrayList<Point> points;
 
     abstract boolean fitsOnBoard(BoardData board);
 
@@ -20,11 +20,4 @@ abstract class Polygon {
     ArrayList<Point> getPoints(){
         return this.points;
     }
-
-    /**
-     * will probably change
-     * @param r
-     * @return
-     */
-
 }

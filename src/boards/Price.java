@@ -25,5 +25,6 @@ class Price implements Validable {
 
     public void setValue(double value) {
         this.value = value;
+
     }
 }
