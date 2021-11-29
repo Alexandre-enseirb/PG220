@@ -21,7 +21,7 @@ class XMLReader implements IReader {
             r = XMLInputFactory.newInstance().createXMLStreamReader(file);
             //int evt = 0;
             while (r.hasNext()) {
-                if (r.getEventType()==1) {
+                if (r.getEventType()==1) { //XMLStreamConstants.START_ELEMENT
                     if (r.getName().toString() == "client") {
                         lesUsers.add(readClient(f,r));
                     } else {

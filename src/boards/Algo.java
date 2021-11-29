@@ -8,7 +8,8 @@ public class Algo {
     public static void main(String[] args) {
         String filename= "src/fichier_XML/clients.xml";
         IReader reader =IReader.InstantiateXMLReader();
-        IFactory cf = IFactory.InstantiateClient();
+        //IFactory cf = IFactory.InstantiateClient();
+        IFactory cf = new ClientFactory();
         ArrayList<IGenerable> cc =  reader.read(cf,filename);
         //ArrayList<Client> c = (Client) f;
         ArrayList<Client > client = new ArrayList<Client>();
