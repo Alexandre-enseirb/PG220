@@ -39,10 +39,9 @@ class Supplier extends Actor{
         b.setAmountValue(b.getAmount().getValue() - a.getValue());
     }
 
-    /**
-     * will probably change, supposed to load a client
-     * @param r
-     */
+    void addBoard(BoardData b) {
+        this.boards.add(b);
+    }
 
 
     int getId() {

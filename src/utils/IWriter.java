@@ -13,4 +13,5 @@ public interface IWriter {
     static IWriter instantiateXMLWriter(boolean append){
         return (IWriter) new XMLWriter(append);
     }
+    static IWriter instantiateSVGWriter() { return new SVGWriter(); }
 }

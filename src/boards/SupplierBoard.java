@@ -2,14 +2,9 @@ package boards;
 
 class SupplierBoard extends BoardData {
 
-    /*SupplierBoard(){
-        this.id=0;
-        this.date=new Date();
-        this.width = new Dimension();
-        this.length = new Dimension();
-        this.price = new Price();
-        this.amount = new Amount();
-    }*/
+    SupplierBoard(){
+        super(0,0,"00.00.00",0,new Dimension(0), new Dimension(0));
+    }
 
      SupplierBoard(int id, int amount, String date,double price, IGenerable length, IGenerable width) {
          super(id, amount, date, price, length, width);

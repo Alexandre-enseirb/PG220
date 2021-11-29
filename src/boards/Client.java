@@ -24,6 +24,9 @@ class Client extends Actor {
     }
 
 
+    void addBoard(BoardData b) {
+        this.boards.add(b);
+    }
 
     int getId(){
         return this.id;

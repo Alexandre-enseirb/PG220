@@ -26,6 +26,8 @@ abstract class BoardData implements IGenerable{
         this.width = (Dimension) width;
     }
 
+
+
     boolean allValid(){
         for(Validable v : listV){
             if (!v.isValid())
