@@ -72,10 +72,13 @@ public class SVGWriter implements IWriter {
         char quote='"';
         char newline='\n';
         String out="<svg xmlns="+quote+"http://www.w3.org/2000/svg"+quote+" xmlns:xlink="+quote+"http://www.w3.org/1999/xlink"
-                +quote+" width="+quote+"100%"+quote+" height="+quote+"100%"+quote+" viewBox="+quote+"0 0 100 100"
+                +quote+" x="+quote+5+quote+" y="+quote+5+quote+" width="+quote+"100%"+quote+" height="+quote+"100%"
+                +quote+" viewBox="+quote+"0 0 200 200"
                 +quote+">";
-        out+=tab+"<rect width="+quote+"50"+quote+" height="+quote+"50"+quote+" fill="+quote+"white"+quote+" stroke="
-                +quote+"black"+quote+" stroke-width="+quote+".5"+quote+"/>\n";
+        out+=fullRectangle(5,5,80,50);
+        out+=fullRectangle(10,10,60,30, "yellow");
+        out+=dashedRectangle(5,5,20,10);
+        out+=dashedRectangle(25,70,20,10, "blue");
         out+="</svg>\n";
 
         byte[] outB = out.getBytes();
@@ -88,6 +91,45 @@ public class SVGWriter implements IWriter {
         }
     }
 
+    String fullRectangle(int posX, int posY, int width, int height) {
+        String fill = "white";
+        String strokeColor = "black";
+        String strokeWidth = ".5";
+
+        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+                +Integer.toString(width)+"\" height=\""+Integer.toString(height)+"\" fill =\""+fill+"\" stroke=\""
+                +strokeColor+"\" stroke-width=\""+strokeWidth+"\"/>";
+    }
+    String fullRectangle(int posX, int posY, int width, int height, String fill) {
+
+        String strokeColor = "black";
+        String strokeWidth = ".5";
+
+        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+                +Integer.toString(width)+"\" height=\""+Integer.toString(height)+"\" fill =\""+fill+"\" stroke=\""
+                +strokeColor+"\" stroke-width=\""+strokeWidth+"\"/>";
+    }
+    String dashedRectangle(int posX, int posY, int width, int height) {
+        String fill = "white";
+        String strokeColor = "black";
+        String strokeWidth = ".5";
+        String strokeDasharray = "2,2";
+
+        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+                +Integer.toString(width)+"\" height=\""+Integer.toString(height)+"\" fill =\""+fill+"\" stroke=\""
+                +strokeColor+"\" stroke-width=\""+strokeWidth+"\" stroke-dasharray=\""+strokeDasharray+"\"/>";
+    }
+
+    String dashedRectangle(int posX, int posY, int width, int height, String fill) {
+
+        String strokeColor = "black";
+        String strokeWidth = ".5";
+        String strokeDasharray = "2,2";
+
+        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+                +Integer.toString(width)+"\" height=\""+Integer.toString(height)+"\" fill =\""+fill+"\" stroke=\""
+                +strokeColor+"\" stroke-width=\""+strokeWidth+"\" stroke-dasharray=\""+strokeDasharray+"\"/>";
+    }
     public void closeFile() {
         String close = "\n</body>\n</html>";
         byte[] outB = close.getBytes();

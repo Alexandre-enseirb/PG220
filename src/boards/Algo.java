@@ -1,6 +1,7 @@
 package boards;
 
 import utils.IReader;
+import utils.IWriter;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,22 @@ public class Algo {
             System.out.println(s.boards.get(0).length.getValue());
         }
 
+        cutTest(lesclients, lesSuppliers);
+    }
 
+    static void cutTest(ArrayList<Client> listC, ArrayList<Supplier> listS) {
+        int id=0;
+        String filename="export.XML";
+        IWriter w = IWriter.instantiateXMLWriter(true);
+        w.openFile(filename);
+        for (Client c : listC) {
+            for (Supplier s : listS) {
+                Cut cut = new Cut(id++, c, s);
+                cut.hasValidCuts();
+                w.writeToFile(cut);
+            }
+        }
+        w.closeFile();
     }
 }
 
