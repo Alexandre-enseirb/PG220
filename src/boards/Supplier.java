@@ -43,7 +43,10 @@ class Supplier extends Actor{
         this.boards.add(b);
     }
 
+    void buy2(BoardData b, Amount a){
 
+        b.setAmountValue(b.getAmount().getValue() - a.getValue());
+    }
     int getId() {
         return this.id;
     }

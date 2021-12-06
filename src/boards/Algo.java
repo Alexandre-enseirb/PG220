@@ -40,8 +40,9 @@ public class Algo {
         for (Client c : listC) {
             for (Supplier s : listS) {
                 Cut cut = new Cut(id++, c, s);
-                cut.hasValidCuts();
-                w.writeToFile(cut);
+                // tostr modifié
+                cut.algo_etape2(); // ce que j'ai rajouté
+                w.writeDecoupes(cut);  //ce que j'ai rajouté
             }
         }
         w.closeFile();

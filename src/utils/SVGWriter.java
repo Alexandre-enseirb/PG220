@@ -91,6 +91,11 @@ public class SVGWriter implements IWriter {
         }
     }
 
+    @Override
+    public void writeDecoupes(IWritable w) {
+
+    }
+
     String fullRectangle(int posX, int posY, int width, int height) {
         String fill = "white";
         String strokeColor = "black";
