@@ -14,7 +14,7 @@ public class XMLWriter implements IWriter {
 
     private boolean append;
     private FileOutputStream file;
-    private String folder="out/xml/";
+    private String folder="";
     XMLWriter(boolean append){
         this.file=null;
         this.append=append;
@@ -45,6 +45,7 @@ public class XMLWriter implements IWriter {
             e.printStackTrace();
         }
         try {
+            System.out.println(this.folder+filename);
             this.file = new FileOutputStream(this.folder+filename, this.append);
         }
         catch(FileNotFoundException e){
@@ -52,7 +53,7 @@ public class XMLWriter implements IWriter {
             return;
         }
         System.out.println("[ IWriter ] File open successfully.");
-        String open="<Cuts>\n";
+        String open="<cuts>\n";
         byte[] strToBytes = open.getBytes();
         try {
             this.file.write(strToBytes);
@@ -64,10 +65,27 @@ public class XMLWriter implements IWriter {
     }
 
     public void writeToFile(IWritable w) {
-        ArrayList<String> data = w.toStr();
+        ArrayList<ArrayList<String>> data = w.toStr();
         String tab="    ";
         char quote='"';
         char newline='\n';
+        char startElem='<';
+        String endElem=">"+newline;
+        String out="";
+        for (ArrayList<String> listS : data) {
+            out += tab + startElem + listS.get(0) + endElem;
+            out += tab+tab+ startElem + listS.get(1) + " "
+                    +listS.get(2)+"="+listS.get(3)+" "
+                    +listS.get(4)+"="+listS.get(5)+"."+listS.get(6)+"/"+endElem;
+            out += tab+tab+ startElem + listS.get(7) + " "
+                    +listS.get(8)+"="+listS.get(9)+" "
+                    +listS.get(10)+"="+listS.get(11)+"."+listS.get(12)+"/"+endElem;
+            out += tab+tab+ startElem + listS.get(13) + " "
+                    +listS.get(14)+"="+listS.get(15)+" "
+                    +listS.get(16)+"="+listS.get(17)+"/"+endElem;
+            out+=tab+startElem+"/"+listS.get(0)+endElem;
+        }
+        /*
         int boardsAmount;
         int ptr=3;
         // begin XLM file
@@ -90,7 +108,7 @@ public class XMLWriter implements IWriter {
             out+=tab+tab+"</Board>"+newline;
         }
         out+=tab+"</Cut>"+newline;
-
+        */
         byte[] strToBytes = out.getBytes();
         try {
             this.file.write(strToBytes);
@@ -99,10 +117,12 @@ public class XMLWriter implements IWriter {
             e.printStackTrace();
             return;
         }
+
+
     }
 
     public void closeFile() {
-        String close ="</Cuts>\n";
+        String close ="</cuts>\n";
         byte[] strToBytes = close.getBytes();
         try {
             this.file.write(strToBytes);

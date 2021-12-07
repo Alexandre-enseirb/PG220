@@ -67,7 +67,7 @@ public class SVGWriter implements IWriter {
     }
 
     public void writeToFile(IWritable w) {
-        ArrayList<String> data = w.toStr();
+        ArrayList<ArrayList<String>> data = w.toStr();
         String tab="    ";
         char quote='"';
         char newline='\n';

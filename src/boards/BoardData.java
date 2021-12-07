@@ -5,6 +5,7 @@ import java.util.ArrayList;
 abstract class BoardData{
 
     int id;
+    int ownerId;
     Date date;
     Amount amount;
     Price price;
@@ -13,7 +14,8 @@ abstract class BoardData{
 
     private ArrayList<Validable> listV;
 
-    BoardData(int id, int amount, String date,double price, double length, double width) {
+    BoardData(int ownerId, int id, int amount, String date,double price, double length, double width) {
+        this.ownerId=ownerId;
         this.id = id;
         String[] array = date.split("\\.");
         this.date = new Date();
@@ -94,6 +96,10 @@ abstract class BoardData{
     void setWidth(Dimension width) {
         this.width = width;
     }
+
+    void setOwnerId(int id) { this.ownerId = id; }
+
+    int getOwnerId() { return this.ownerId; }
 
 
 }
