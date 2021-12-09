@@ -27,7 +27,7 @@ public class ClientFactory implements IFactory{
                 double len = Double.parseDouble(info_Planche.get(4));
                 double wid = Double.parseDouble(info_Planche.get(5));
 
-                BoardData board = new ClientBoard(pid,nbr,date,prix,len,wid);
+                BoardData board = new ClientBoard(id, pid,nbr,date,prix,len,wid);
                 boards.add(board);
             }
             Client c = new Client(id,boards);

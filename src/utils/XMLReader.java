@@ -15,6 +15,7 @@ class XMLReader implements IReader {
     @Override
     public ArrayList<ArrayList<Object>> read(String filename) {
         FileInputStream file = null;
+        IGenerable rdb;
         ArrayList<ArrayList<Object>> lesUsers = new ArrayList<>();
         try {
             file = new FileInputStream(filename);

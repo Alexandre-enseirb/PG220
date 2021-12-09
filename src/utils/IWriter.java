@@ -8,6 +8,7 @@ public interface IWriter {
 
     void openFile(String filename);
     void writeToFile(IWritable w);
+    //public void writeDecoupes(IWritable w);
     void closeFile();
 
     static IWriter instantiateXMLWriter(boolean append){

@@ -26,7 +26,7 @@ public class SupplierFactory implements IFactory{
                 double len = Double.parseDouble(info_Planche.get(4));
                 double wid = Double.parseDouble(info_Planche.get(5));
 
-                BoardData board = new SupplierBoard(pid,nbr,date,prix,len,wid);
+                BoardData board = new SupplierBoard(id, pid,nbr,date,prix,len,wid);
                 boards.add(board);
             }
             Supplier c = new Supplier(id,boards);

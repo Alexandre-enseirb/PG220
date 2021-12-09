@@ -101,10 +101,10 @@ public class XMLWriter implements IWriter {
 
         while(ptr<boardsAmount) {
             out+=tab+tab+"<Board id="+quote+data.get(ptr++)+quote
-                    +", amount="+quote+data.get(ptr++)+quote
-                    +", date="+quote+data.get(ptr++)+quote
-                    +", price="+quote+data.get(ptr++)+quote+">"+newline;
-            out+=tab+tab+tab+"<Dim l="+quote+data.get(ptr++)+quote+", L="+quote+data.get(ptr++)+quote+"/>"+newline;
+                    +" amount="+quote+data.get(ptr++)+quote
+                    +" date="+quote+data.get(ptr++)+quote
+                    +" price="+quote+data.get(ptr++)+quote+">"+newline;
+            out+=tab+tab+tab+"<Dim l="+quote+data.get(ptr++)+quote+" L="+quote+data.get(ptr++)+quote+"/>"+newline;
             out+=tab+tab+"</Board>"+newline;
         }
         out+=tab+"</Cut>"+newline;
@@ -120,7 +120,50 @@ public class XMLWriter implements IWriter {
 
 
     }
+    /*
+    public void writeDecoupes(IWritable w) {
+        ArrayList<String> data = w.toStr();
+        String tab="    ";
+        char quote='"';
+        char newline='\n';
+        int boardsAmount;
+        int ptr=3;
+        // begin XLM file
+        String out = new String();
+       // String decoupeid = data.get(0);
+        String clientid = data.get(1);
+        String supplierid = data.get(2);
 
+        boardsAmount = data.size();
+
+        while(ptr<boardsAmount){
+            int clientBoardId = Integer.parseInt(data.get(ptr++));
+            int supplierBoardId = Integer.parseInt(data.get(ptr++));
+            int nbrBoard = Integer.parseInt(data.get(ptr++));
+            int currentIdCb = Integer.parseInt(data.get(ptr++));
+            int currentIdSb = Integer.parseInt(data.get(ptr++));
+
+            for(int i = 0;i<nbrBoard;i++){
+                out =tab+"<Cut"+">"+newline;
+                out +=tab+tab+"<client id="+quote+clientid+quote+" planche="+quote+clientBoardId+"."+(i+currentIdCb)+quote+" />"+newline;
+                out +=tab+tab+"<fournisseur id="+quote+supplierid+quote+" panneau="+quote+supplierBoardId+"."+(i+currentIdSb)+quote+" />"+newline;
+                out +=tab+tab+"<position x="+quote+"0.00"+quote+" y="+quote+"0.00"+quote+" />"+newline;
+                out += tab+"</Cut>"+newline;
+                byte[] strToBytes = out.getBytes();
+
+                try {
+                    this.file.write(strToBytes);
+                }
+                catch (IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+            }
+
+        }
+
+    }
+*/
     public void closeFile() {
         String close ="</cuts>\n";
         byte[] strToBytes = close.getBytes();
@@ -140,3 +183,6 @@ public class XMLWriter implements IWriter {
         }
     }
 }
+
+
+

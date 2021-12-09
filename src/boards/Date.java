@@ -52,7 +52,7 @@ class Date implements Validable {
         boolean leap=false; /* is it a leap year ? */
         int maxdays;
 
-        if (this.year < 1970 || this.year > 2030){
+        if (this.year < 0 || this.year > 99){
             return false;
         }
         if (this.month < 1 || this.month > 12){

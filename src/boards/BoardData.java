@@ -11,6 +11,15 @@ abstract class BoardData{
     Price price;
     Dimension length;
     Dimension width;
+    int currentid;  // pour sauvgarder l'id acutel de ce qu'il reste
+
+    public int getCurrentid() {
+        return currentid;
+    }
+
+    public void setCurrentid(int currentid) {
+        this.currentid = currentid;
+    }
 
     private ArrayList<Validable> listV;
 
@@ -26,6 +35,7 @@ abstract class BoardData{
         this.price = new Price(price);
         this.length = new Dimension(length);
         this.width =  new Dimension(width);
+        this.currentid = 0;
     }
 
 
