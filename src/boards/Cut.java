@@ -50,19 +50,27 @@ class Cut implements IWritable {
             if (!((ClientBoard) cb).isValidated()) {
                 for (BoardData sb : supplierBoards) {
                     // comparing to a supplier board
+
+                    // DATE
                     if (!cb.getDate().comesAfter(sb.getDate())) {
                         //System.out.println(tab+cb.id+"Delays not working.");
                         System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Delays not working");
                         continue; // won't be done in the given delays
                     }
-                    if (cb.getPrice().getValue() < sb.getPrice().getValue()) { //  price nest pas correcte
+
+                    // PRICE
+                    if (cb.getPrice().getValue() < sb.getPrice().getValue()) {
                         System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " too expensive");
                         continue; // too expensive for the client
                     }
+
+                    // AMOUNT
                     if (cb.getAmount().getValue() > sb.getAmount().getValue()) {
                         System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Not enough board to buy");
                         continue; // supplier can't supply enough
                     }
+
+                    // DIMENSIONS
                     if (    (cb.getLength().getValue() > sb.getLength().getValue() ||
                             cb.getWidth().getValue() > sb.getWidth().getValue() )  &&
                             (cb.getWidth().getValue() > sb.getLength().getValue()  ||
@@ -71,6 +79,8 @@ class Cut implements IWritable {
                         System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Board too small.");
                         continue; // does not fit in length
                     }
+
+
                     // if we get here, everything is okay.
                     ((ClientBoard) cb).setValidated(true);
                     //displayCut((ClientBoard) cb, (SupplierBoard) sb);
@@ -80,12 +90,12 @@ class Cut implements IWritable {
                     try {
                         System.out.println(tab+tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Buy it.");
                         this.supplier.buy(sb, cb.getAmount());
-                        break;
+
                     }
                     catch(NotEnoughBoardsException e){
                             e.printStackTrace();
                     }
-
+                    break;
                 }
             }
         }
@@ -140,26 +150,31 @@ class Cut implements IWritable {
 
         int loop=0;
         for(BoardData b:this.validBoards){
-        cutData.add("cut");     // data(0)
-        cutData.add("client");  // data(1)
-        cutData.add("id");      // data(2)
-        cutData.add(Integer.toString(b.getOwnerId()));
-        cutData.add("board");   // data(4)
-        cutData.add(Integer.toString(b.getId()));
-        cutData.add(Integer.toString(b.getAmount().getValue()));
-        sb=(SupplierBoard)this.supplierBoards.get(loop);
-        cutData.add("supplier");
-        cutData.add("id");
-        cutData.add(Integer.toString(sb.getOwnerId()));
-        cutData.add("board");
-        cutData.add(Integer.toString(sb.getId()));
-        cutData.add(Integer.toString(sb.getAmount().getValue()));
-        cutData.add("position");
-        cutData.add("x");
-        cutData.add("0");
-        cutData.add("y");
-        cutData.add("0");
-        listS.add(cutData);
+            cutData.clear();                                            // avoids cut duplication
+            cutData.add("cut");                                         // data(0)
+            cutData.add("client");                                      // data(1)
+            cutData.add("id");                                          // data(2)
+            cutData.add(Integer.toString(b.getOwnerId()));              // data(3)
+            cutData.add("board");                                       // data(4)
+            cutData.add(Integer.toString(b.getId()));                   // data(5)
+            cutData.add(Integer.toString(b.getAmount().getValue()));    // data(6)
+            cutData.add(Double.toString(b.getLength().getValue()));     // data(7)
+            cutData.add(Double.toString(b.getWidth().getValue()));      // data(8)
+            sb=(SupplierBoard)this.supplierBoards.get(loop++);            // data(9)
+            cutData.add("supplier");                                    // data(10)
+            cutData.add("id");                                          // data(11)
+            cutData.add(Integer.toString(sb.getOwnerId()));             // data(12)
+            cutData.add("board");                                       // data(13)
+            cutData.add(Integer.toString(sb.getId()));                  // data(14)
+            cutData.add(Integer.toString(b.getAmount().getValue()));    // data(15) - TEMPORARY
+            cutData.add(Double.toString(sb.getLength().getValue()));    // data(16)
+            cutData.add(Double.toString(sb.getWidth().getValue()));     // data(17)
+            cutData.add("position");                                    // data(18)
+            cutData.add("x");                                           // data(19)
+            cutData.add("0");                                           // data(20)
+            cutData.add("y");                                           // data(21)
+            cutData.add("0");                                           // data(22)
+            listS.add(cutData);
         }
 
         /*

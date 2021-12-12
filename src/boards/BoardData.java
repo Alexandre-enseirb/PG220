@@ -36,6 +36,13 @@ abstract class BoardData{
         this.length = new Dimension(length);
         this.width =  new Dimension(width);
         this.currentid = 0;
+        this.listV = new ArrayList<>();
+
+        this.listV.add(this.date);
+        this.listV.add(this.amount);
+        this.listV.add(this.price);
+        this.listV.add(this.length);
+        this.listV.add(this.width);
     }
 
 

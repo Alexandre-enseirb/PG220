@@ -45,19 +45,25 @@ public class Algo {
 
     static void cutTest(ArrayList<Client> listC, ArrayList<Supplier> listS, String path) {
         int id=0;
-        String filename=path + "/export.XML";
+        String filenameXML=path + "/export.XML";
+        String filenameSVG=path + "/export.SVG";
         IWriter w = IWriter.instantiateXMLWriter(false);
-        w.openFile(filename);
+        IWriter svgw = IWriter.instantiateSVGWriter();
+        w.openFile(filenameXML);
+        svgw.openFile(filenameSVG);
         for (Client c : listC) {
             for (Supplier s : listS) {
                 Cut cut = new Cut(id++, c, s);
+                cut.hasValidCuts();
                 // tostr modifié
                 w.writeToFile(cut);
+                svgw.writeToFile(cut);
                 //cut.algo_etape2(); // ce que j'ai rajouté
                 //w.writeDecoupes(cut);  //ce que j'ai rajouté
             }
         }
         w.closeFile();
+        svgw.closeFile();
     }
 }
 

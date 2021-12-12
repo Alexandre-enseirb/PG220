@@ -66,6 +66,8 @@ public class XMLWriter implements IWriter {
 
     public void writeToFile(IWritable w) {
         ArrayList<ArrayList<String>> data = w.toStr();
+        if (data.size() == 0)
+            return;
         String tab="    ";
         char quote='"';
         char newline='\n';
@@ -77,12 +79,12 @@ public class XMLWriter implements IWriter {
             out += tab+tab+ startElem + listS.get(1) + " "
                     +listS.get(2)+"="+listS.get(3)+" "
                     +listS.get(4)+"="+listS.get(5)+"."+listS.get(6)+"/"+endElem;
-            out += tab+tab+ startElem + listS.get(7) + " "
-                    +listS.get(8)+"="+listS.get(9)+" "
-                    +listS.get(10)+"="+listS.get(11)+"."+listS.get(12)+"/"+endElem;
-            out += tab+tab+ startElem + listS.get(13) + " "
-                    +listS.get(14)+"="+listS.get(15)+" "
-                    +listS.get(16)+"="+listS.get(17)+"/"+endElem;
+            out += tab+tab+ startElem + listS.get(9) + " "
+                    +listS.get(10)+"="+listS.get(11)+" "
+                    +listS.get(12)+"="+listS.get(13)+"."+listS.get(14)+"/"+endElem;
+            out += tab+tab+ startElem + listS.get(17) + " "
+                    +listS.get(18)+"="+listS.get(19)+" "
+                    +listS.get(20)+"="+listS.get(21)+"/"+endElem;
             out+=tab+startElem+"/"+listS.get(0)+endElem;
         }
         /*
