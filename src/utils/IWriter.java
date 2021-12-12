@@ -2,11 +2,11 @@ package utils;
 
 import boards.IWritable;
 
-import java.io.IOException;
+import java.util.Scanner;
 
 public interface IWriter {
 
-    void openFile(String filename);
+    void openFile(String filename, Scanner sc);
     void writeToFile(IWritable w);
     //public void writeDecoupes(IWritable w);
     void closeFile();

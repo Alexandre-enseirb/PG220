@@ -20,18 +20,18 @@ public class SVGWriter implements IWriter {
         this.file=null;
     }
 
-    public void openFile(String filename) {
+    public void openFile(String filename, Scanner sc) {
         File tmp = new File(this.folder+filename);
         boolean exists = tmp.exists();
         if (exists){
             String ret="";
-            Scanner sc = new Scanner(System.in);
+            //Scanner sc = new Scanner(System.in);
             while (!ret.equalsIgnoreCase("y") && !ret.equalsIgnoreCase("n")) {
                 System.out.print("[WARNING] File "+filename+" already exists. Do you want to overwrite it? (y/n) ");
                 ret = sc.next();
 
             }
-            sc.close();
+
             if (ret.equalsIgnoreCase("n")) {
                 System.out.println("Aborting.");
                 return;
@@ -89,7 +89,7 @@ public class SVGWriter implements IWriter {
 
 
         // creating the canvas
-        System.out.println("Il est passé par ici");
+        
         String out="<svg xmlns="+quote+"http://www.w3.org/2000/svg"+quote+" xmlns:xlink="+quote+"http://www.w3.org/1999/xlink"
                 +quote+" x="+quote+0+quote+" y="+quote+0+quote+" width=\"100%\" height=\""
                 +Double.toString(totalHeight+textFontSize)+"\">";

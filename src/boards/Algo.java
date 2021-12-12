@@ -6,6 +6,7 @@ import utils.IWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Algo {
     public static void main(String[] args) throws NoDirectoryException, NotEnoughArgumentsException{
@@ -47,10 +48,11 @@ public class Algo {
         int id=0;
         String filenameXML=path + "/export.XML";
         String filenameSVG=path + "/export.SVG";
+        Scanner sc = new Scanner(System.in);
         IWriter w = IWriter.instantiateXMLWriter(false);
         IWriter svgw = IWriter.instantiateSVGWriter();
-        w.openFile(filenameXML);
-        svgw.openFile(filenameSVG);
+        w.openFile(filenameXML, sc);
+        svgw.openFile(filenameSVG, sc);
         for (Client c : listC) {
             for (Supplier s : listS) {
                 Cut cut = new Cut(id++, c, s);
@@ -64,6 +66,7 @@ public class Algo {
         }
         w.closeFile();
         svgw.closeFile();
+        sc.close();
     }
 }
 

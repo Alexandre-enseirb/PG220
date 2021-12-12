@@ -20,17 +20,17 @@ public class XMLWriter implements IWriter {
         this.append=append;
     }
 
-    public void openFile(String filename) {
+    public void openFile(String filename, Scanner sc) {
         File tmp = new File(this.folder+filename);
         boolean exists = tmp.exists();
         if (exists && !this.append){
             String ret="";
-            Scanner sc = new Scanner(System.in);
+            //Scanner sc = new Scanner(System.in);
             while (!ret.equalsIgnoreCase("y") && !ret.equalsIgnoreCase("n")) {
                 System.out.print("[WARNING] File "+filename+" already exists. Do you want to overwrite it? (y/n) ");
                 ret = sc.next();
             }
-            sc.close();
+
             if (ret.equalsIgnoreCase("n")) {
                 System.out.println("Aborting.");
                 return;
