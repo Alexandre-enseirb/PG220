@@ -17,6 +17,7 @@ public class ClientFactory implements IFactory{
             int id = Integer.parseInt(String.valueOf(Users.get(i).get(0)));
             int nbr_element = Users.get(i).size();
             ArrayList<BoardData> boards = new ArrayList<>();
+
             int pid=-1;
             int nbr=-1;
             String date="01.01.01";
@@ -27,10 +28,14 @@ public class ClientFactory implements IFactory{
             {
                 ArrayList<String> info_Planche = (ArrayList<String>) Users.get(i).get(j);
                 try {
+
                     pid = Integer.parseInt(info_Planche.get(0));
                     nbr = Integer.parseInt(info_Planche.get(1));
                     date = info_Planche.get(2);
                     prix = Double.parseDouble(info_Planche.get(3));
+
+                    //<<<<<<< Updated upstream
+
                     len = Double.parseDouble(info_Planche.get(4));
                     wid = Double.parseDouble(info_Planche.get(5));
                 } catch (NumberFormatException e) {
@@ -44,6 +49,26 @@ public class ClientFactory implements IFactory{
                     }
                 }
 
+//=======
+//                   len = Double.parseDouble(info_Planche.get(4));
+//                    wid = Double.parseDouble(info_Planche.get(5));
+//               }catch (NumberFormatException n){
+//                   System.out.println("invalid, skip");
+//                   continue;
+//               }
+//
+//                   BoardData board = new ClientBoard(pid,nbr,date,prix,len,wid);
+//                   if(board.allValid()|| board.length.getValue()<board.width.getValue()){
+//                       System.out.println("true");
+//                       boards.add(board);
+//                   }
+//                    else{
+//
+//                       System.out.println("false");
+//                        continue;
+//                   }
+////                boards.add(board);
+//>>>>>>> Stashed changes
 
 
             }

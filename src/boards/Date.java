@@ -68,6 +68,7 @@ class Date implements Validable {
         if (this.day < 1 || this.day > maxdays){
             return false;
         }
+        System.out.println("date valid");
 
         /* finally */
         return true;

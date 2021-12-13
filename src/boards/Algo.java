@@ -30,15 +30,17 @@ public class Algo {
         for(Client c : listC){
             System.out.println(c.id);
             System.out.println(c.boards.get(0).date);
-            System.out.println(c.boards.get(0).length.getValue());
+            System.out.println(c.boards.get(0).price.getValue());
         }
 
         Users =  reader.read(filename1);
+
         ArrayList<Supplier> listS = SupplierFactory.IGenerable2Suppliers(sf.generatePeople(Users));
         for(Supplier s : listS){
             System.out.println(s.id);
             System.out.println(s.boards.get(0).date);
             System.out.println(s.boards.get(0).length.getValue());
+
         }
 
         cutTest(listC, listS, path.toString());

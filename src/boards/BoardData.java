@@ -12,6 +12,7 @@ abstract class BoardData{
     Dimension length;
     Dimension width;
     int currentid;  // pour sauvgarder l'id acutel de ce qu'il reste
+    int userid;
 
     public int getCurrentid() {
         return currentid;
@@ -26,6 +27,7 @@ abstract class BoardData{
     BoardData(int ownerId, int id, int amount, String date,double price, double length, double width) {
         this.ownerId=ownerId;
         this.id = id;
+        this.listV = new ArrayList<>();
         String[] array = date.split("\\.");
         this.date = new Date();
         this.date.setDay(Integer.parseInt(array[0]));
@@ -36,21 +38,32 @@ abstract class BoardData{
         this.length = new Dimension(length);
         this.width =  new Dimension(width);
         this.currentid = 0;
-        this.listV = new ArrayList<>();
-
-        this.listV.add(this.date);
-        this.listV.add(this.amount);
-        this.listV.add(this.price);
-        this.listV.add(this.length);
-        this.listV.add(this.width);
+        this.userid = -1;
+        listV.add(this.date);
+        listV.add(this.price);
+        listV.add(this.length);
+        listV.add(this.width);
+        listV.add(this.amount);
     }
 
 
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
+
     boolean allValid(){
         for(Validable v : listV){
-            if (!v.isValid())
+            if (!v.isValid()){
+                System.out.println(v);
                 return false;
+
+            }
+
         }
         return true;
     }
