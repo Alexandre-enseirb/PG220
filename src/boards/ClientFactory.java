@@ -2,13 +2,23 @@ package boards;
 
 import java.util.ArrayList;
 
+/**
+ * creates a Client via the list given by the reader
+ */
 public class ClientFactory implements IFactory{
+    /**
+     * Constructor
+     */
     ClientFactory(){
 
     }
 
 
-
+    /**
+     * generates a list of clients
+     * @param Users list of list of variables
+     * @return list of IGenerables
+     */
     @Override
     public ArrayList<IGenerable> generatePeople(ArrayList<ArrayList<Object>> Users) {
         ArrayList<IGenerable> lesclients = new ArrayList<>();
@@ -53,6 +63,11 @@ public class ClientFactory implements IFactory{
         return lesclients;
     }
 
+    /**
+     * Converts the Igenerables to Clients
+     * @param lesclients list of IGenerables
+     * @return list of Clients
+     */
     static ArrayList<Client> IGenerable2Clients(ArrayList<IGenerable> lesclients){
         ArrayList<Client > client = new ArrayList<Client>();
         for(IGenerable c:lesclients){

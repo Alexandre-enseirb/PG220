@@ -1,5 +1,8 @@
 package boards;
 
+/**
+ * Price of the board
+ */
 class Price implements Validable {
 
     private double value;
@@ -12,6 +15,10 @@ class Price implements Validable {
         this.value = val;
     }
 
+    /**
+     * tests if the value is valid
+     * @return true if the value is greater than 0, false else
+     */
     public boolean isValid(){
         if (this.value <= 0){
             return false;

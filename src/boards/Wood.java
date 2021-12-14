@@ -1,5 +1,8 @@
 package boards;
 
+/**
+ * For bonus part, describes the wood durability, origin and color
+ */
 class Wood {
     private int durability;
     private String origin;

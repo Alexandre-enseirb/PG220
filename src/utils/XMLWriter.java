@@ -20,20 +20,32 @@ public class XMLWriter implements IWriter {
         this.append=append;
     }
 
+    /**
+     * opens given file. Scanner serves if the file already exists.
+     * @param filename
+     * @param sc
+     */
     public void openFile(String filename, Scanner sc) {
-        File tmp = new File(this.folder+filename);
+        String[] array = filename.split("\\.");
+        filename=array[0];
+        String extension="."+array[1];
+        File tmp = new File(this.folder+filename+extension);
         boolean exists = tmp.exists();
         if (exists && !this.append){
             String ret="";
             //Scanner sc = new Scanner(System.in);
             while (!ret.equalsIgnoreCase("y") && !ret.equalsIgnoreCase("n")) {
-                System.out.print("[WARNING] File "+filename+" already exists. Do you want to overwrite it? (y/n) ");
+                System.out.print("[WARNING] File "+filename+extension+" already exists. Do you want to overwrite it? (y/n) ");
                 ret = sc.next();
             }
 
             if (ret.equalsIgnoreCase("n")) {
-                System.out.println("Aborting.");
-                return;
+                int add = 1;
+                /* ensures we create a file that does not exist yet */
+                while (tmp.exists()) {
+                    tmp = new File(this.folder + filename + Integer.toString(add) + extension);
+                    add++;
+                }
             }
 
         }
@@ -45,8 +57,8 @@ public class XMLWriter implements IWriter {
             e.printStackTrace();
         }
         try {
-            System.out.println(this.folder+filename);
-            this.file = new FileOutputStream(this.folder+filename, this.append);
+            System.out.println(this.folder+filename+extension);
+            this.file = new FileOutputStream(this.folder+filename+extension, this.append);
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
@@ -64,28 +76,36 @@ public class XMLWriter implements IWriter {
         }
     }
 
-    public void writeToFile(IWritable w) {
-        ArrayList<ArrayList<String>> data = w.toStr();
-        if (data.size() == 0)
-            return;
+    /**
+     * Calls for the .toStr() method of a list of IWritable to write them as an XML file
+     * @param w List of objects to write
+     */
+    public void writeToFile(ArrayList<IWritable> w) {
+
         String tab="    ";
         char quote='"';
         char newline='\n';
         char startElem='<';
         String endElem=">"+newline;
         String out="";
-        for (ArrayList<String> listS : data) {
-            out += tab + startElem + listS.get(0) + endElem;
-            out += tab+tab+ startElem + listS.get(1) + " "
-                    +listS.get(2)+"="+listS.get(3)+" "
-                    +listS.get(4)+"="+listS.get(5)+"."+listS.get(6)+"/"+endElem;
-            out += tab+tab+ startElem + listS.get(9) + " "
-                    +listS.get(10)+"="+listS.get(11)+" "
-                    +listS.get(12)+"="+listS.get(13)+"."+listS.get(14)+"/"+endElem;
-            out += tab+tab+ startElem + listS.get(17) + " "
-                    +listS.get(18)+"="+listS.get(19)+" "
-                    +listS.get(20)+"="+listS.get(21)+"/"+endElem;
-            out+=tab+startElem+"/"+listS.get(0)+endElem;
+
+        for (IWritable export : w) {
+
+            ArrayList<String> data = export.toStr();
+            if (data.size() == 0)
+                return;
+
+            out += tab + startElem + "Cut" + endElem;
+            out += tab+tab+ startElem + data.get(0) + " "
+                    +data.get(1)+"="+data.get(2)+" "
+                    +data.get(3)+"="+data.get(4)+"."+data.get(5)+"/"+endElem;
+            out += tab+tab+ startElem + data.get(8) + " "
+                    +data.get(9)+"="+data.get(10)+" "
+                    +data.get(11)+"="+data.get(12)+"."+data.get(13)+"/"+endElem;
+            out += tab+tab+ startElem + data.get(16) + " "
+                    +data.get(17)+"="+data.get(18)+" "
+                    +data.get(19)+"="+data.get(20)+"/"+endElem;
+            out+=tab+startElem+"/Cut"+endElem;
         }
         /*
         int boardsAmount;
@@ -166,6 +186,10 @@ public class XMLWriter implements IWriter {
 
     }
 */
+
+    /**
+     * finishes writing in the file and closes it
+     */
     public void closeFile() {
         String close ="</cuts>\n";
         byte[] strToBytes = close.getBytes();

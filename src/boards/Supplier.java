@@ -4,6 +4,9 @@ import utils.IReader;
 
 import java.util.ArrayList;
 
+/**
+ * Our suppliers
+ */
 class Supplier extends Actor{
 
     Supplier(){
@@ -15,12 +18,7 @@ class Supplier extends Actor{
         this.id=id;
         this.boards=boards;
     }
-    /**
-     * Parses through all of the supplier's boards and returns those
-     * that get along with what the client needs
-     * @param b board needed by the client
-     * @return {ArrayList\<BoardData\>} boards that fit
-     */
+
     /*ArrayList<BoardData> allValidBoards(ClientBoard b){
         ArrayList<BoardData> ret = new ArrayList<BoardData>();
         for (BoardData sb : boards){
@@ -32,6 +30,12 @@ class Supplier extends Actor{
 
     }*/
 
+    /**
+     * Removes the quantity of boards described by a to this supplier
+     * @param b boards to buy
+     * @param a quantity to buy
+     * @throws NotEnoughBoardsException if the supplier has less boards than we want to buy
+     */
     void buy(BoardData b, Amount a) throws NotEnoughBoardsException {
         if (b.getAmount().getValue() < a.getValue()){
             throw new NotEnoughBoardsException();

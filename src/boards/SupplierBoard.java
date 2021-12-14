@@ -1,5 +1,8 @@
 package boards;
 
+/**
+ * represents an offer from the supplier
+ */
 class SupplierBoard extends BoardData {
 
     SupplierBoard(){
