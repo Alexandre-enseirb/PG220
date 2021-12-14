@@ -8,7 +8,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main class of the package
+ */
 public class Algo {
+    /**
+     * Main method
+     * @param args first arg has to be the folder where the .xml files are stored
+     * @throws NoDirectoryException the folder given as an argument does not exist
+     * @throws NotEnoughArgumentsException no argument was given
+     */
     public static void main(String[] args) throws NoDirectoryException, NotEnoughArgumentsException{
         String folder = "debug value. Please do not mind.";
         try {
@@ -51,8 +60,15 @@ public class Algo {
         cutTest(listC, listS, path.toString());
     }
 
+    /**
+     * demonstrates how the Cut class works
+     * @param listC list of Clients
+     * @param listS list of Suppliers
+     * @param path path to the files
+     */
     static void cutTest(ArrayList<Client> listC, ArrayList<Supplier> listS, String path) {
         int id=0;
+
         String filenameXML=path + "/export.XML";
         String filenameSVG=path + "/export.SVG";
         Scanner sc = new Scanner(System.in);
@@ -64,9 +80,10 @@ public class Algo {
             for (Supplier s : listS) {
                 Cut cut = new Cut(id++, c, s);
                 cut.hasValidCuts();
+                ArrayList<IWritable> export = cut.export();
                 // tostr modifié
-                w.writeToFile(cut);
-                svgw.writeToFile(cut);
+                w.writeToFile(export);
+                svgw.writeToFile(export);
                 //cut.algo_etape2(); // ce que j'ai rajouté
                 //w.writeDecoupes(cut);  //ce que j'ai rajouté
             }

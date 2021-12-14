@@ -2,12 +2,19 @@ package boards;
 
 import java.util.ArrayList;
 
+/**
+ * creates a Supplier from a list of values
+ */
 public class SupplierFactory implements IFactory{
     SupplierFactory(){
 
     }
 
-
+    /**
+     * Generates suppliers
+     * @param Users all the variables needed to create our actors
+     * @return a list of suppliers cast as IGenerables
+     */
     @Override
     public ArrayList<IGenerable> generatePeople(ArrayList<ArrayList<Object>> Users) {
         ArrayList<IGenerable> lesSuppliers = new ArrayList<>();
@@ -64,6 +71,11 @@ public class SupplierFactory implements IFactory{
         return lesSuppliers;
     }
 
+    /**
+     * Converts all the suppliers to Supplier
+     * @param lesSuppliers list of Suppliers cast as IGenerables
+     * @return a list of Suppliers
+     */
     static ArrayList<Supplier> IGenerable2Suppliers(ArrayList<IGenerable> lesSuppliers){
         ArrayList<Supplier > suppliers = new ArrayList<Supplier>();
         for(IGenerable c:lesSuppliers){

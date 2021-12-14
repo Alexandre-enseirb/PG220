@@ -1,6 +1,12 @@
 package boards;
 
+
 import java.util.ArrayList;
+
+
+/**
+ * represents an offer from the supplier
+ */
 
 class SupplierBoard extends BoardData {
 

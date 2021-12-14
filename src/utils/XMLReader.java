@@ -12,6 +12,11 @@ import java.util.ArrayList;
 class XMLReader implements IReader {
     private XMLStreamReader r;
 
+    /**
+     * reads the .XML file given as parameter
+     * @param filename name of the file
+     * @return a list of lists of values
+     */
     @Override
     public ArrayList<ArrayList<Object>> read(String filename) {
         FileInputStream file = null;
@@ -40,6 +45,11 @@ class XMLReader implements IReader {
         return lesUsers;
     }
 
+    /**
+     * Reads a user
+     * @param r an XMLStreamReader used to read the fields
+     * @return a list of values read
+     */
     public ArrayList<Object> readUsers(XMLStreamReader r) {
         ArrayList<Object> Users = new ArrayList<>();
 
@@ -81,6 +91,11 @@ class XMLReader implements IReader {
 
     }
 
+    /**
+     * reads a board
+     * @param r an XMLStreamReader used to read the fields
+     * @return a list of values read
+     */
     public ArrayList<String> readPlanche(XMLStreamReader r){
 
         ArrayList<String> p = new ArrayList<>();

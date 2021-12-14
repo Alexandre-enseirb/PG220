@@ -2,9 +2,21 @@ package boards;
 
 import utils.IReader;
 
+/**
+ * Represents the date of the order or delivery, depending on the Actor's type
+ */
 class Date implements Validable {
+    /**
+     * Day of order/delivery
+     */
     private int day;
+    /**
+     * Month of order/delivery
+     */
     private int month;
+    /**
+     * year of order/delivery
+     */
     private int year;
 
     private int[] monthlen = {31,28,31,30,31,30,31,31,30,31,30,31};
@@ -47,6 +59,11 @@ class Date implements Validable {
         this.year=year;
     }
 
+    /**
+     * Tests if the year is between "00" and "99", if the month is between "01" and "12", and if the day is between
+     * "01" and the last valid day for this month (between "28" and "31")
+     * @return true if the date is valid, false else
+     */
     public boolean isValid(){
         /* year must be between 1970 (epoch) and 2030 (no commands after) */
         boolean leap=false; /* is it a leap year ? */
@@ -74,6 +91,11 @@ class Date implements Validable {
         return true;
     }
 
+    /**
+     * Compares two dates together
+     * @param d another date to compare this with
+     * @return true if this date comes after d, false else
+     */
     boolean comesAfter(Date d){
         if (this.year > d.getYear())
             return true;
@@ -84,6 +106,10 @@ class Date implements Validable {
         return false;
     }
 
+    /**
+     * Stringifies the date
+     * @return String representing the date
+     */
     public String toString(){
         return Integer.toString(this.day)+
                 "."+Integer.toString(this.month)+

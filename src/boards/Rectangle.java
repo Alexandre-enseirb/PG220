@@ -1,5 +1,8 @@
 package boards;
 
+/**
+ * Simplifies rectangles management
+ */
 class Rectangle extends Polygon {
 
     Point p1;
@@ -17,6 +20,11 @@ class Rectangle extends Polygon {
         this.addPoint(p2);
     }
 
+    /**
+     * tests if the rectangle is on the board
+     * @param b the board
+     * @return true if it fits, false else
+     */
     boolean fitsOnBoard(BoardData b){
         for (Point p : this.getPoints()){
             if (!p.isOnBoard(b))
@@ -25,6 +33,11 @@ class Rectangle extends Polygon {
         return true;
     }
 
+    /**
+     * tests if both polygons overlap
+     * @param p another polygon to compare this with
+     * @return false as of now
+     */
     boolean overlaps(Polygon p){
         return false; // TODO
     }

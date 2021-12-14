@@ -1,5 +1,8 @@
 package boards;
 
+/**
+ * Exception
+ */
 public class NotBigEnoughException extends Exception{
 
     NotBigEnoughException(){}
