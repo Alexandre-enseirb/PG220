@@ -1,5 +1,7 @@
 package boards;
 
+import java.util.ArrayList;
+
 class SupplierBoard extends BoardData {
 
     SupplierBoard(){
@@ -10,5 +12,14 @@ class SupplierBoard extends BoardData {
          super(oid, id, amount, date, price, length, width);
 
     }
-
+    static ArrayList<BoardData> ordonneBoard(ArrayList<Supplier> t){
+        ArrayList<BoardData> boards = new ArrayList<BoardData>();
+        for(Supplier s:t){
+            for(BoardData board:s.boards){
+                board.setUserid(s.getId());
+                boards.add(board);
+            }
+        }
+        return boards;
+    }
 }

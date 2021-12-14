@@ -29,37 +29,16 @@ class ClientBoard extends BoardData {
     }
 
     // take all the boards demand from arraylist of client
-    static ArrayList<ClientBoard> ordonneBoard(ArrayList<Client> t){
-        ArrayList<ClientBoard> boards = new ArrayList<ClientBoard>();
+    static ArrayList<BoardData> ordonneBoard(ArrayList<Client> t){
+        ArrayList<BoardData> boards = new ArrayList<BoardData>();
         for(Client c:t){
             for(BoardData board:c.boards){
                 board.setUserid(c.getId());
-                boards.add((ClientBoard) board);
+                boards.add(board);
             }
         }
         return boards;
     }
 
-    static void sort(ArrayList<ClientBoard> t){
-        for(int i =1;i<t.size();i++){
-            for (int j =0;j<t.size()-1;j++){
-                if(t.get(j).length.getValue()<t.get(j+1).length.getValue()){ // 比length
-                    ClientBoard temp = t.get(j);
-                   // ClientBoard temp2 = t.get(j+1);
-                    t.set(j,t.get(j+1));
-                    t.set(j+1,temp);
-                }
-                else if(t.get(j).length.getValue() == t.get(j+1).length.getValue()){
-                    if(t.get(j).width.getValue() < t.get(j+1).width.getValue()){
-                        ClientBoard temp = t.get(j);
-                        // ClientBoard temp2 = t.get(j+1);
-                        t.set(j,t.get(j+1));
-                        t.set(j+1,temp);
-                    }
-                }
 
-
-            }
-        }
-    }
 }

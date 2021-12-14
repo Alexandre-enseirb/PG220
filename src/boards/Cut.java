@@ -10,7 +10,8 @@ class Cut implements IWritable {
     private ArrayList<BoardData> validBoards;
     private ArrayList<BoardData> supplierBoards;
     private ArrayList<Integer>   quantities;
-
+    double x;
+    double y;
     /* unused value, might delete later */
     private int id;
     //private ArrayList<String> algo2;
@@ -31,6 +32,17 @@ class Cut implements IWritable {
         this.supplierBoards = new ArrayList<>();
         this.quantities = new ArrayList<>();
     }
+
+    Cut(int id, Client client, Supplier supplier,double x,double y){
+        this.id=id;
+        this.client=client;
+        this.supplier=supplier;
+        this.validBoards=new ArrayList<>();
+        this.supplierBoards = new ArrayList<>();
+        this.quantities = new ArrayList<>();
+        this.x = x;
+        this.y = y;
+    }
 /*        this.algo2 = new ArrayList<>();
         this.algo2.add(Integer.toString(id));
         this.algo2.add(Integer.toString(client.id));
@@ -38,8 +50,7 @@ class Cut implements IWritable {
 */
 
 
-    // supplier的price比较有误 (已修改） ？
-    // break  已修改
+
     void hasValidCuts(){
         ArrayList<BoardData> supplierBoards =  this.supplier.getBoards();
         ArrayList<BoardData> clientBoards   =  this.client.getBoards();

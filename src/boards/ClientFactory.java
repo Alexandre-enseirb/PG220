@@ -40,14 +40,27 @@ public class ClientFactory implements IFactory{
                     wid = Double.parseDouble(info_Planche.get(5));
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid field. Client skipped.");
-                } finally {
-                    BoardData board = new ClientBoard(id, pid,nbr,date,prix,len,wid);
-                    if (board.allValid()) {
-                        boards.add(board);
-                    }else{
-                        System.out.println("Invalid board. Skipped.");
-                    }
+                    continue;
                 }
+                BoardData board = new ClientBoard(id,pid,nbr,date,prix,len,wid);
+                if(board.allValid()&& board.length.getValue()>=board.width.getValue()){
+                    System.out.println("true"+board.getLength().getValue()+" "+board.getWidth().getValue());
+                    boards.add(board);
+                }
+                else{
+
+                    System.out.println("false");
+                    continue;
+                }
+
+//                finally {
+//                    BoardData board = new ClientBoard(id, pid,nbr,date,prix,len,wid);
+//                    if (board.allValid()) {
+//                        boards.add(board);
+//                    }else{
+//                        System.out.println("Invalid board. Skipped.");
+//                    }
+//                }
 
 //=======
 //                   len = Double.parseDouble(info_Planche.get(4));
@@ -67,7 +80,7 @@ public class ClientFactory implements IFactory{
 //                       System.out.println("false");
 //                        continue;
 //                   }
-////                boards.add(board);
+//                boards.add(board);
 //>>>>>>> Stashed changes
 
 

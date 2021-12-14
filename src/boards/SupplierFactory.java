@@ -36,14 +36,25 @@ public class SupplierFactory implements IFactory{
 
                 } catch(NumberFormatException e) {
                     System.out.println("Invalid field. Supplier skipped.");
-                } finally {
-                    BoardData board = new SupplierBoard(id, pid,nbr,date,prix,len,wid);
-                    if (board.allValid()) {
-                        boards.add(board);
-                    }else{
-                        System.out.println("Invalid value, skipped.");
-                    }
                 }
+                BoardData board = new SupplierBoard(id, pid,nbr,date,prix,len,wid);
+                if(board.allValid()&& board.length.getValue()>=board.width.getValue()){
+                    System.out.println("true"+board.getLength().getValue()+" "+board.getWidth().getValue());
+                    boards.add(board);
+                }
+                else{
+
+                    System.out.println("false");
+                    continue;
+                }
+//                finally {
+//                    BoardData board = new SupplierBoard(id, pid,nbr,date,prix,len,wid);
+//                    if (board.allValid()) {
+//                        boards.add(board);
+//                    }else{
+//                        System.out.println("Invalid value, skipped.");
+//                    }
+//                }
 
 
             }

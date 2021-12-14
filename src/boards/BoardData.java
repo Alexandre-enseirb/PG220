@@ -131,5 +131,26 @@ abstract class BoardData{
 
     int getOwnerId() { return this.ownerId; }
 
+    static void sort(ArrayList<BoardData> t){
+        for(int i =1;i<t.size();i++){
+            for (int j =0;j<t.size()-1;j++){
+                if(t.get(j).length.getValue()<t.get(j+1).length.getValue()){ // 比length
+                    BoardData temp = t.get(j);
+                    // ClientBoard temp2 = t.get(j+1);
+                    t.set(j,t.get(j+1));
+                    t.set(j+1,temp);
+                }
+                else if(t.get(j).length.getValue() == t.get(j+1).length.getValue()){
+                    if(t.get(j).width.getValue() < t.get(j+1).width.getValue()){
+                        BoardData temp = t.get(j);
+                        // ClientBoard temp2 = t.get(j+1);
+                        t.set(j,t.get(j+1));
+                        t.set(j+1,temp);
+                    }
+                }
 
+
+            }
+        }
+    }
 }

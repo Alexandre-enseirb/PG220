@@ -43,6 +43,11 @@ public class Algo {
 
         }
 
+        ArrayList<BoardData> lesboards = ClientBoard.ordonneBoard(listC);
+        ClientBoard.sort(lesboards);
+        for(BoardData d:lesboards){
+            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue());
+        }
         cutTest(listC, listS, path.toString());
     }
 
@@ -69,6 +74,52 @@ public class Algo {
         w.closeFile();
         svgw.closeFile();
         sc.close();
+    }
+
+    static void etap3_opti(ArrayList<BoardData> ClientsDemand, ArrayList<BoardData> SupplierDemand,ArrayList<Client> listC, ArrayList<Supplier> listS, String path){
+        int id=0;
+        boolean enligne = false;
+        String filenameXML=path + "/export.XML";
+        String filenameSVG=path + "/export.SVG";
+        Scanner sc = new Scanner(System.in);
+        IWriter w = IWriter.instantiateXMLWriter(false);
+        IWriter svgw = IWriter.instantiateSVGWriter();
+        w.openFile(filenameXML, sc);
+        svgw.openFile(filenameSVG, sc);
+
+        for (BoardData sb:SupplierDemand){
+            Supplier s = listS.get(sb.ownerId);
+            double Ls = sb.length.getValue();
+            double Ws = sb.width.getValue();
+
+            for(BoardData cb:ClientsDemand){ // 遍历array cb
+                Client c = listC.get(cb.ownerId);
+                if(cb.getLength().getValue() > Ls && cb.getWidth().getValue() > Ws){
+                    // cb.length > sb.length or cb.width > sb.width;
+                    continue;
+                }
+//                else {
+//                    enligne = true;
+//                    Ls = Ls - cb.getLength().getValue();
+//
+//                }
+                else if(Ls >= cb.getLength().getValue()){
+                    enligne = true;
+                }
+                else if(Ls < cb.getLength().getValue()){
+                    enligne = false;
+                    if(Ws > cb.getWidth().getValue()){
+
+                    }
+                }
+
+            }
+        }
+
+
+
+
+
     }
 }
 
