@@ -28,4 +28,17 @@ class SupplierBoard extends BoardData {
         }
         return boards;
     }
+
+    static ArrayList<BoardData> ordonneBoard2(ArrayList<Supplier> t){
+        ArrayList<BoardData> boards = new ArrayList<BoardData>();
+        for(Supplier c:t){
+            for(BoardData board:c.boards){
+                for(int i = 0;i<board.getAmount().getValue();i++){
+                    BoardData b = new ClientBoard(c.id,board.id,1,board.date.toString(),board.price.getValue(),board.length.getValue(),board.width.getValue(),i);
+                    boards.add(b);
+                }
+            }
+        }
+        return boards;
+    }
 }

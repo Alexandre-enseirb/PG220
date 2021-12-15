@@ -39,6 +39,9 @@ class ClientBoard extends BoardData {
      ClientBoard(int oid, int id, int amount, String date,double price,double length,double width) {
         super(oid, id,amount,date,price,length,width);
     }
+    ClientBoard(int oid, int id, int amount, String date,double price,double length,double width,int number) {
+        super(oid, id,amount,date,price,length,width,number);
+    }
 
 
     /**
@@ -70,5 +73,16 @@ class ClientBoard extends BoardData {
         return boards;
     }
 
-
+    static ArrayList<BoardData> ordonneBoard2(ArrayList<Client> t){
+        ArrayList<BoardData> boards = new ArrayList<BoardData>();
+        for(Client c:t){
+            for(BoardData board:c.boards){
+                for(int i = 0;i<board.getAmount().getValue();i++){
+                    BoardData b = new ClientBoard(c.id,board.id,1,board.date.toString(),board.price.getValue(),board.length.getValue(),board.width.getValue(),i);
+                    boards.add(b);
+                }
+            }
+        }
+        return boards;
+    }
 }

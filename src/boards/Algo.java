@@ -52,12 +52,21 @@ public class Algo {
 
         }
 
-        ArrayList<BoardData> lesboards = ClientBoard.ordonneBoard(listC);
+        ArrayList<BoardData> lesboards = ClientBoard.ordonneBoard2(listC);
         ClientBoard.sort(lesboards);
         for(BoardData d:lesboards){
-            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue());
+            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue()+"no: "+d.getNumber());
         }
-        cutTest(listC, listS, path.toString());
+        System.out.println("*************************************************************************");
+        System.out.println("*************************************************************************");
+        System.out.println("*************************************************************************");
+        ArrayList<BoardData> lespanneaux = SupplierBoard.ordonneBoard2(listS);
+        SupplierBoard.sort(lespanneaux);
+        for(BoardData d:lespanneaux){
+            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue()+"no: "+d.getNumber());
+        }
+        //cutTest(listC, listS, path.toString());
+        etap3_opti(lesboards,lespanneaux,path.toString());
     }
 
     /**
@@ -93,9 +102,7 @@ public class Algo {
         sc.close();
     }
 
-    static void etap3_opti(ArrayList<BoardData> ClientsDemand, ArrayList<BoardData> SupplierDemand,ArrayList<Client> listC, ArrayList<Supplier> listS, String path){
-        int id=0;
-        boolean enligne = false;
+    static void etap3_opti(ArrayList<BoardData> ClientsDemand, ArrayList<BoardData> SupplierDemand, String path){
         String filenameXML=path + "/export.XML";
         String filenameSVG=path + "/export.SVG";
         Scanner sc = new Scanner(System.in);
@@ -103,40 +110,113 @@ public class Algo {
         IWriter svgw = IWriter.instantiateSVGWriter();
         w.openFile(filenameXML, sc);
         svgw.openFile(filenameSVG, sc);
-
+        ArrayList<IWritable> cuts = new ArrayList<>();
+        int flags = -1;
         for (BoardData sb:SupplierDemand){
-            Supplier s = listS.get(sb.ownerId);
+
             double Ls = sb.length.getValue();
             double Ws = sb.width.getValue();
+            double x = 0.00;
+            double y = 0.00;
+            double premierL=0.00;
+            System.out.println(ClientsDemand.get(ClientsDemand.size()-1).getLength().getValue());
+                while (Ws  > ClientsDemand.get(ClientsDemand.size()-1).getLength().getValue() && flags != 0){
+                    // comparer avec la length min
+                    flags = 0;
+                    for(BoardData cb:ClientsDemand){
+                        flags = flags + cb.getAmount().getValue();
+                        if(cb.getAmount().getValue() > 0){
+                            if(cb.length.getValue() <= Ws && cb.width.getValue() <= Ls){
+                                // taille parfait, on peut decoupe
+                                if(x == 0.00){
 
-            for(BoardData cb:ClientsDemand){ // 遍历array cb
-                Client c = listC.get(cb.ownerId);
-                if(cb.getLength().getValue() > Ls && cb.getWidth().getValue() > Ws){
-                    // cb.length > sb.length or cb.width > sb.width;
-                    continue;
-                }
-//                else {
-//                    enligne = true;
-//                    Ls = Ls - cb.getLength().getValue();
-//
-//                }
-                else if(Ls >= cb.getLength().getValue()){
-                    enligne = true;
-                }
-                else if(Ls < cb.getLength().getValue()){
-                    enligne = false;
-                    if(Ws > cb.getWidth().getValue()){
+                                    premierL = cb.getLength().getValue();
+                                    System.out.println("note premier L "+premierL);
+                                }
+                                // decoupe
+                                CutElement cute = new CutElement(cb.getOwnerId(), cb.getId(), cb.getNumber(),
+                                        sb.getOwnerId(), sb.getId(), sb.getNumber(),
+                                        cb.getLength().getValue(), cb.getWidth().getValue(),
+                                        sb.getLength().getValue(), sb.getWidth().getValue(),
+                                        x, y);
+                                cuts.add(cute);
+
+                                //
+
+                                x = x+cb.width.getValue();
+                                Ls = Ls - cb.width.getValue();
+                                cb.setAmountValue(cb.getAmount().getValue()-1);
+                                System.out.println("decoupe 1 in "+sb.getDate().toString()+"longuer " + cb.getLength().getValue()+"width "+cb.getWidth().getValue());
+                            }
+                        }else {
+                            continue;
+                        }
 
                     }
+
+                    // quand une ligne est finie, on va commencer par nouvelle ligne
+                    Ws = Ws - premierL;
+                    y = y+premierL;
+                    Ls = sb.getLength().getValue();
+                    x = 0.00;
+                    //System.out.println("y : "+y);
                 }
 
-            }
+            System.out.println("im in sb "+sb.id);
+
+
         }
-
-
-
-
+        System.out.println("jj");
+        w.writeToFile(cuts);
+        svgw.writeToFile(cuts);
+        w.closeFile();
+        svgw.closeFile();
+        sc.close();
 
     }
 }
 
+//double premierw;
+//            for(BoardData cb:ClientsDemand){ // 遍历array cb
+//                Client c = listC.get(cb.ownerId);
+//                if(cb.length.getValue() <= Ws && cb.width.getValue() <= Ls){
+//                    // cb.length > sb.length or cb.width > sb.width;
+//                    if(x == 0.00){
+//                        premierL = cb.getLength().getValue();
+//                    }
+//                    Ls = Ls - cb.width.getValue();
+//
+//                    Cut cut = new Cut(id++,c,s,x,y);
+//                    x = x+cb.width.getValue();
+//
+//                    cut.hasValidCuts();
+//                    ArrayList<IWritable> export = cut.export();
+//                    w.writeToFile(export);
+//                    svgw.writeToFile(export);
+//                }
+////                else {
+////                    enligne = true;
+////                    Ls = Ls - cb.getLength().getValue();
+////
+////                }
+//                else if(cb.width.getValue() > Ls){
+//                    Ws = Ws - premierL;
+//                    Ls = sb.getLength().getValue();
+//                    x = 0.00;
+//                    y = y + premierL;
+//                    if(cb.length.getValue() <= Ws){
+//                        Cut cut = new Cut(id++,c,s,x,y);
+//                        x = x+cb.width.getValue();
+//                        premierL = cb.getLength().getValue();
+//
+//                        cut.hasValidCuts();
+//                        ArrayList<IWritable> export = cut.export();
+//                        w.writeToFile(export);
+//                        svgw.writeToFile(export);
+//                    }else{
+//                        continue;
+//                    }
+//                }
+//
+//
+//            }

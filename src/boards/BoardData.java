@@ -91,7 +91,31 @@ abstract class BoardData{
         this.listV.add(this.length);
         this.listV.add(this.width);
     }
+    BoardData(int ownerId, int id, int amount, String date,double price, double length, double width, int number) {
+        this.ownerId=ownerId;
+        this.id = id;
 
+        String[] array = date.split("\\.");
+        this.date = new Date();
+        this.date.setDay(Integer.parseInt(array[0]));
+        this.date.setMonth(Integer.parseInt(array[1]));
+        this.date.setYear(Integer.parseInt(array[2]));
+        this.amount= new Amount(amount);
+        this.price = new Price(price);
+        this.length = new Dimension(length);
+        this.width =  new Dimension(width);
+
+        this.currentid = 0;
+        this.userid = -1;
+        this.number = number;
+        this.listV = new ArrayList<>();
+
+        this.listV.add(this.date);
+        this.listV.add(this.amount);
+        this.listV.add(this.price);
+        this.listV.add(this.length);
+        this.listV.add(this.width);
+    }
 
 
     public int getUserid() {
