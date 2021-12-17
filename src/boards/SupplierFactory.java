@@ -26,7 +26,7 @@ public class SupplierFactory implements IFactory{
             int pid=-1;
             int nbr=-1;
             String date="01.01.01";
-            double prix=-1;
+            double price=-1;
             double len=-1;
             double wid=-1;
             for(int j = 1;j<nbElem;j++)
@@ -37,14 +37,14 @@ public class SupplierFactory implements IFactory{
                     pid = Integer.parseInt(boardData.get(0));
                     nbr = Integer.parseInt(boardData.get(1));
                     date = boardData.get(2);
-                    prix = Double.parseDouble(boardData.get(3));
-                    len = Double.parseDouble(boardData.get(5));
-                    wid = Double.parseDouble(boardData.get(6));
+                    price = Double.parseDouble(boardData.get(3));
+                    len = Double.parseDouble(boardData.get(4));
+                    wid = Double.parseDouble(boardData.get(5));
 
                 } catch(NumberFormatException e) {
                     System.out.println("Invalid field. Supplier skipped.");
                 }
-                BoardData board = new SupplierBoard(id, pid,nbr,date,prix,len,wid);
+                BoardData board = new SupplierBoard(id, pid,nbr,date,price,len,wid);
                 if(board.allValid()&& board.length.getValue()>=board.width.getValue()){
 
                     boards.add(board);

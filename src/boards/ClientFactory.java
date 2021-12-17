@@ -48,34 +48,18 @@ public class ClientFactory implements IFactory{
                     date = boardData.get(2);
                     price = Double.parseDouble(boardData.get(3));
 
-                    switch(boardData.get(4)){
-                        case "rect":
-                            len = Double.parseDouble(boardData.get(5));
-                            wid = Double.parseDouble(boardData.get(6));
-                            break;
-                        case "poly":
-                            listP = new ArrayList<>();
-                            polygonal=true;
-                            x = Double.parseDouble(boardData.get(5));
-                            y = Double.parseDouble(boardData.get(6));
-                            listP.add(new Point(x,y));
-                            break;
-                    }
+                    len = Double.parseDouble(boardData.get(4));
+                    wid = Double.parseDouble(boardData.get(5));
+
+
 
 
                 } catch (NumberFormatException e) {
-
+                    System.out.println("Invalid field. Skipping.");
                     continue;
                 }
-                ClientBoard board = null;
-                if (!polygonal){
-                    board = new ClientBoard(id,pid,nb,date,price,len,wid);
-                }else{
-                    AnyPolygon poly = new AnyPolygon(listP);
-                    Rectangle coveringRect = poly.getCoveringRectangle();
-                    board = new ClientBoard(id, pid, nb, date, price, coveringRect.getLength(), coveringRect.getWidth());
-                    board.setShape(poly);
-                }
+                BoardData board = null;
+                board = new ClientBoard(id,pid,nb,date,price,len,wid);
 
                 if(board.allValid()&& board.length.getValue()>=board.width.getValue()){
 

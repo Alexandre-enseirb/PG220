@@ -155,6 +155,7 @@ public class SVGWriter implements IWriter {
 
         String uid = "not an id";
         String prevuid="still not an id";
+
         for (IWritable export : w) {
             listS = export.toStr();
             amount = "1";

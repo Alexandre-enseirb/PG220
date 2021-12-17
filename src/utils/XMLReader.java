@@ -111,22 +111,9 @@ class XMLReader implements IReader {
             while (r.hasNext()){
                 if(r.next() == XMLStreamConstants.START_ELEMENT){
                     name=r.getLocalName();
-                    if("dim".equalsIgnoreCase(name)){
-                        p.add("rect");                                      // data(4)
-                        p.add(r.getAttributeValue(0));                   // data(5)
-                        p.add(r.getAttributeValue(1));                   // data(6)
-                    }
-                    if ("p".equalsIgnoreCase(name)){
-                        int counter = 0;
-                        p.add("poly");                                      // data(4)
-                        while (r.hasNext() && r.getName().toString().equals("p")){
-                            counter++;
-                            p.add(r.getAttributeValue(0));                   // data(5)
-                            p.add(r.getAttributeValue(1));                   // data(6)
-                        }
-                        p.add(Integer.toString(counter));
-                        
-
+                    if("dim".equalsIgnoreCase(name)) {
+                        p.add(r.getAttributeValue(0));                   // data(4)
+                        p.add(r.getAttributeValue(1));                   // data(5)
                     }
 
                     return p;

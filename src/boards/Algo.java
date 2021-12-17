@@ -31,7 +31,7 @@ public class Algo {
         String folder_step_1 = "/etape 1";
         String folder_step_2 = "/etape 2";
         String folder_step_3 = "/etape 3";
-        String folder_step_4 = "/etape 4";
+        //String folder_step_4 = "/etape 4"; NOT YET IMPLEMENTED
 
         String clientFile = "/clients.xml";
         String supplierFile = "/suppliers.xml";
@@ -101,6 +101,20 @@ public class Algo {
         System.out.println("[      ] First algorithm.");
         step3_unoptimized(clientBoards, supplierBoards, path.toString()+folder_step_3, sc);
         System.out.println("[  OK  ] First algorithm.");
+        Users =  reader.read(path+folder_step_3+clientFile);
+
+        listC = ClientFactory.IGenerable2Clients(cf.generatePeople(Users));
+
+
+        Users =  reader.read(path+folder_step_3+supplierFile);
+
+        listS = SupplierFactory.IGenerable2Suppliers(sf.generatePeople(Users));
+
+        clientBoards = ClientBoard.ordonneBoard2(listC);
+        ClientBoard.sort(clientBoards);
+
+        supplierBoards = SupplierBoard.ordonneBoard2(listS);
+        SupplierBoard.sort(supplierBoards);
         System.out.println("[      ] Improved algorithm. Please refuse overwrite if you want to see all the export files.");
         step3(clientBoards,supplierBoards,path.toString()+folder_step_3,sc);
         System.out.println("[  OK  ] Improved algorithm.");
