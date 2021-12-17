@@ -248,7 +248,7 @@ public class Algo {
                 for (BoardData cb : ClientsDemand) {
                     flags = flags + cb.getAmount().getValue();
                     if (cb.getAmount().getValue() > 0) {
-                        if (cb.width.getValue() <= Ws && cb.length.getValue() <= Ls) {
+                        if (cb.width.getValue() <= Ls && cb.length.getValue() <= Ws) {
 
                             CutElement cut = new CutElement(cb.getOwnerId(), cb.getId(), cb.getNumber(),
                                     sb.getOwnerId(), sb.getId(), sb.getNumber(),
@@ -259,10 +259,10 @@ public class Algo {
 
                             //
 
-                            x = x + cb.length.getValue();
-                            y = y + cb.width.getValue();
-                            Ls = Ls - cb.length.getValue();
-                            Ws = Ws - cb.width.getValue();
+                            x = x + cb.width.getValue();
+                            y = y + cb.length.getValue();
+                            Ls = Ls - cb.width.getValue();
+                            Ws = Ws - cb.length.getValue();
                             cb.setAmountValue(cb.getAmount().getValue() - 1);
 
                         }
