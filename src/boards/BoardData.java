@@ -137,7 +137,7 @@ abstract class BoardData{
     boolean allValid(){
         for(Validable v : listV){
             if (!v.isValid()){
-                System.out.println(v);
+
                 return false;
 
             }

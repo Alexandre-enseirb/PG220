@@ -105,7 +105,6 @@ class Cut {
 
                 // DATE
                 if (!cb.getDate().comesAfter(sb.getDate())) {
-                    //System.out.println(tab+cb.id+"Delays not working.");
                     System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Delays not working");
                     continue; // won't be done in the given delays
                 }

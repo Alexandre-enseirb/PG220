@@ -30,7 +30,7 @@ class XMLReader implements IReader {
             while (r.hasNext()) {
                 if (r.getEventType()==1) { //XMLStreamConstants.START_ELEMENT
                     name = r.getName().toString();
-                    System.out.println(name);
+
                     if (r.getName().toString() == "client" || r.getName().toString() == "supplier") {
                         listUsers.add(readUsers(r));
                     } else {
@@ -38,12 +38,6 @@ class XMLReader implements IReader {
                     }
 
                 } else {
-                    try{
-                        System.out.println("============="+r.getLocalName());
-                    }catch(IllegalStateException e){
-                        r.next();
-                        continue;
-                    }
                     r.next();
                 }
             }

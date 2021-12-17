@@ -48,11 +48,12 @@ public class SVGWriter implements IWriter {
             }
 
             if (ret.equalsIgnoreCase("n")) {
-                add = 1;
+                add = 0;
                 /* ensures we create a file that does not exist yet */
                 while (tmp.exists()) {
-                    tmp = new File(this.folder + filename + Integer.toString(add)+extension);
                     add++;
+                    tmp = new File(this.folder + filename + Integer.toString(add)+extension);
+
                 }
 
             }

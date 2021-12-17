@@ -64,7 +64,7 @@ public class ClientFactory implements IFactory{
 
 
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid field. Client skipped.");
+
                     continue;
                 }
                 ClientBoard board = null;
@@ -78,12 +78,12 @@ public class ClientFactory implements IFactory{
                 }
 
                 if(board.allValid()&& board.length.getValue()>=board.width.getValue()){
-                    System.out.println("true"+board.getLength().getValue()+" "+board.getWidth().getValue());
+
                     boards.add(board);
                 }
                 else{
 
-                    System.out.println("false");
+                    System.out.println("Invalid client. Skipped.");
                     continue;
                 }
 
@@ -104,7 +104,7 @@ public class ClientFactory implements IFactory{
         ArrayList<Client > client = new ArrayList<Client>();
         for(IGenerable c:listClients){
             client.add((Client) c);
-            System.out.println("Client" + ((Client) c).id);
+
         }
         return client;
     }

@@ -41,11 +41,12 @@ public class XMLWriter implements IWriter {
             }
 
             if (ret.equalsIgnoreCase("n")) {
-                add = 1; // set, we were prompted to erase the file
+                add = 0; // set, we were prompted to erase the file
                 /* ensures we create a file that does not exist yet */
                 while (tmp.exists()) {
-                    tmp = new File(this.folder + filename + Integer.toString(add) + extension);
                     add++;
+                    tmp = new File(this.folder + filename + Integer.toString(add) + extension);
+
                 }
             }
 

@@ -45,87 +45,77 @@ public class Algo {
         IFactory sf = new SupplierFactory();
 
         /* ====== TEST FOR STEP 1 ====== */
+        System.out.println("");
+        System.out.println("============================================================");
+        System.out.println("=========================== PART 1 =========================");
+        System.out.println("============================================================");
+        System.out.println("");
+
         ArrayList<ArrayList<Object>> Users =  reader.read(path+folder_step_1+clientFile);
 
         ArrayList<Client> listC = ClientFactory.IGenerable2Clients(cf.generatePeople(Users));
-        for(Client c : listC){
-            System.out.println(c.id);
-            System.out.println(c.boards.get(0).date);
-            System.out.println(c.boards.get(0).price.getValue());
-        }
 
         Users =  reader.read(path+folder_step_1+supplierFile);
 
         ArrayList<Supplier> listS = SupplierFactory.IGenerable2Suppliers(sf.generatePeople(Users));
-        for(Supplier s : listS){
-            System.out.println(s.id);
-            System.out.println(s.boards.get(0).date);
-            System.out.println(s.boards.get(0).length.getValue());
 
-        }
 
         /* ====== TEST FOR STEP 2 ====== */
+        System.out.println("");
+        System.out.println("============================================================");
+        System.out.println("=========================== PART 2 =========================");
+        System.out.println("============================================================");
+        System.out.println("");
+
         Users =  reader.read(path+folder_step_2+clientFile);
 
         listC = ClientFactory.IGenerable2Clients(cf.generatePeople(Users));
-        for(Client c : listC){
-            System.out.println(c.id);
-            System.out.println(c.boards.get(0).date);
-            System.out.println(c.boards.get(0).price.getValue());
-        }
 
         Users =  reader.read(path+folder_step_2+supplierFile);
 
         listS = SupplierFactory.IGenerable2Suppliers(sf.generatePeople(Users));
-        for(Supplier s : listS){
-            System.out.println(s.id);
-            System.out.println(s.boards.get(0).date);
-            System.out.println(s.boards.get(0).length.getValue());
-
-        }
 
 
         cutTest(listC, listS, path.toString()+folder_step_2,sc);
 
         /* ====== TEST PART 3 ====== */
+        System.out.println("");
+        System.out.println("============================================================");
+        System.out.println("=========================== PART 3 =========================");
+        System.out.println("============================================================");
+        System.out.println("");
         Users =  reader.read(path+folder_step_3+clientFile);
 
         listC = ClientFactory.IGenerable2Clients(cf.generatePeople(Users));
-        for(Client c : listC){
-            System.out.println(c.id);
-            System.out.println(c.boards.get(0).date);
-            System.out.println(c.boards.get(0).price.getValue());
-        }
+
 
         Users =  reader.read(path+folder_step_3+supplierFile);
 
         listS = SupplierFactory.IGenerable2Suppliers(sf.generatePeople(Users));
-        for(Supplier s : listS){
-            System.out.println(s.id);
-            System.out.println(s.boards.get(0).date);
-            System.out.println(s.boards.get(0).length.getValue());
-
-        }
 
         ArrayList<BoardData> clientBoards = ClientBoard.ordonneBoard2(listC);
         ClientBoard.sort(clientBoards);
-        for(BoardData d:clientBoards){
-            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue()+"no: "+d.getNumber());
-        }
 
         ArrayList<BoardData> supplierBoards = SupplierBoard.ordonneBoard2(listS);
         SupplierBoard.sort(supplierBoards);
-        for(BoardData d:supplierBoards){
-            System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue()+"no: "+d.getNumber());
-        }
-
+        System.out.println("[      ] First algorithm.");
+        step3_unoptimized(clientBoards, supplierBoards, path.toString()+folder_step_3, sc);
+        System.out.println("[  OK  ] First algorithm.");
+        System.out.println("[      ] Improved algorithm. Please refuse overwrite if you want to see all the export files.");
         step3(clientBoards,supplierBoards,path.toString()+folder_step_3,sc);
+        System.out.println("[  OK  ] Improved algorithm.");
 
 
         System.out.println("============================================================");
         System.out.println("====================== END OF PROCESS ======================");
         System.out.println("============================================================");
+
+        System.out.println("");
+        System.out.println("Please feel free to scroll up to see any message you may have missed.");
+        System.out.println("Please type anything, and then ENTER to terminate once you are done.");
+        sc.next();
         sc.close();
+
     }
 
     /**
@@ -184,7 +174,7 @@ public class Algo {
             double y = 0.00;
 
             double firstL=0.00;
-            System.out.println(ClientsDemand.get(ClientsDemand.size()-1).getLength().getValue());
+
                 /* while at least the last board (the smallest) can be placed on the supplier board */
                 while (Ws  > ClientsDemand.get(ClientsDemand.size()-1).getLength().getValue() && flags != 0){
                     // compare with min length
@@ -197,7 +187,7 @@ public class Algo {
                                 if(x == 0.00){
 
                                     firstL = cb.getLength().getValue();
-                                    System.out.println("First Length "+firstL);
+
                                 }
                                 // cutting
                                 CutElement cut = new CutElement(cb.getOwnerId(), cb.getId(), cb.getNumber(),
@@ -212,7 +202,7 @@ public class Algo {
                                 x = x+cb.width.getValue();
                                 Ls = Ls - cb.width.getValue();
                                 cb.setAmountValue(cb.getAmount().getValue()-1);
-                                System.out.println("cut 1 in "+sb.getDate().toString()+" length " + cb.getLength().getValue()+" width "+cb.getWidth().getValue());
+
                             }
                         }else {
                             continue;
@@ -225,18 +215,75 @@ public class Algo {
                     y = y+firstL;
                     Ls = sb.getLength().getValue();
                     x = 0.00;
-                    //System.out.println("y : "+y);
                 }
 
-            System.out.println("im in sb "+sb.id);
 
 
         }
-        System.out.println("jj");
         w.writeToFile(cuts);
         svgwriter.writeToFile(cuts);
         w.closeFile();
         svgwriter.closeFile();
 
+    }
+    static void step3_unoptimized(ArrayList<BoardData> ClientsDemand, ArrayList<BoardData> SupplierDemand, String path, Scanner sc) {
+        String filenameXML = path + "/export.XML";
+        String filenameSVG = path + "/export.SVG";
+
+        IWriter w = IWriter.instantiateXMLWriter(false);
+        IWriter svgw = IWriter.instantiateSVGWriter();
+        w.openFile(filenameXML, sc);
+        svgw.openFile(filenameSVG, sc);
+        ArrayList<IWritable> cuts = new ArrayList<>();
+        int flags = -1;
+        for (BoardData sb : SupplierDemand) {
+
+            double Ls = sb.length.getValue();
+            double Ws = sb.width.getValue();
+            double x = 0.00;
+            double y = 0.00;
+            while (Ws > ClientsDemand.get(ClientsDemand.size() - 1).getWidth().getValue() && flags != 0 && Ls>ClientsDemand.get(ClientsDemand.size()-1).getWidth().getValue()) {
+                // compare with the long and width min
+                flags = 0;
+                for (BoardData cb : ClientsDemand) {
+                    flags = flags + cb.getAmount().getValue();
+                    if (cb.getAmount().getValue() > 0) {
+                        if (cb.width.getValue() <= Ws && cb.length.getValue() <= Ls) {
+
+                            CutElement cut = new CutElement(cb.getOwnerId(), cb.getId(), cb.getNumber(),
+                                    sb.getOwnerId(), sb.getId(), sb.getNumber(),
+                                    cb.getLength().getValue(), cb.getWidth().getValue(),
+                                    sb.getLength().getValue(), sb.getWidth().getValue(),
+                                    x, y);
+                            cuts.add(cut);
+
+                            //
+
+                            x = x + cb.length.getValue();
+                            y = y + cb.width.getValue();
+                            Ls = Ls - cb.length.getValue();
+                            Ws = Ws - cb.width.getValue();
+                            cb.setAmountValue(cb.getAmount().getValue() - 1);
+
+                        }
+                    } else {
+                        continue;
+                    }
+
+                }
+
+
+
+            }
+
+
+
+
+        }
+
+        w.writeToFile(cuts);
+        svgw.writeToFile(cuts);
+        w.closeFile();
+        svgw.closeFile();
     }
 }
