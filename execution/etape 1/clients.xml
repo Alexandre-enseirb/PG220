@@ -1,0 +1,21 @@
+<clients>
+  <client id="0">
+    <board id="0" amount="10" date="14.06.23" price="300.00">
+      <dim L="50.00" l="40.00" />
+    </board>
+    <board id="1" amount="5" date="04.05.23" price="-200.00">
+      <dim L="50.00" l="100.00" />
+    </board>
+    <board id="2" amount="3" date="16.05.22" price="950.00">
+      <dim L="40.00" l="60.00" />
+    </board>
+  </client>
+  <client id="1">
+    <board id="0" amount="10" date="14.06.12" price="300.00">
+      <dim L="50.00" l="40.00" />
+    </board>
+    <board id="2" amount="10" date="14.06.24" price="bli">
+      <dim L="50.00" l="40.00" />
+    </board>
+  </client>
+</clients>

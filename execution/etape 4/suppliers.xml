@@ -1,0 +1,25 @@
+<suppliers>
+  <supplier id="2">
+    <board id="0" amount="10" date="01.02.22" price="200.00">
+      <dim L="200.00" l="100.00" />
+    </board>
+    <board id="1" amount="15" date="17.05.22" price="380.00">
+      <dim L="250.00" l="150.00" />
+    </board>
+    <board id="0" amount="5" date="23.04.22" price="250.00">
+      <dim L="300.00" l="80.00" />
+    </board>
+    <board id="1" amount="6" date="15.05.22" price="180.00">
+      <dim L="30.00" l="380.00" />
+    </board>
+    <board id="0" amount="2" date="28.10.22" price="550.00">
+      <dim L="200.00" l="200.00" />
+    </board>
+    <board id="1" amount="1" date="08.11.22" price="700.00">
+      <dim L="300.00" l="300.00" />
+    </board>
+    <board id="2" amount="1" date="30.12.22" price="1000.00">
+      <dim L="500.00" l="500.00" />
+    </board>
+  </supplier>
+</suppliers>

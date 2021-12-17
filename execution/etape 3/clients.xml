@@ -1,0 +1,51 @@
+<clients>
+  <client id="0">
+    <board id="0" amount="10" date="12.10.23" price="600.00">
+      <dim L="70.00" l="60.00" />
+    </board>
+    <board id="1" amount="20" date="27.04.22" price="500.00">
+      <dim L="30.00" l="30.00" />
+    </board>
+    <board id="2" amount="12" date="30.12.21" price="600.00">
+      <dim L="50.00" l="20.00" />
+    </board>
+  </client>
+  <client id="1">
+    <board id="0" amount="7" date="02.05.22" price="500.00">
+      <dim L="50.00" l="50.00" />
+    </board>
+    <board id="1" amount="5" date="25.02.22" price="600.00">
+      <dim L="100.00" l="50.00" />
+    </board>
+  </client>
+  <client id="2">
+    <board id="0" amount="15" date="03.03.22" price="450.00">
+      <dim L="60.00" l="40.00" />
+    </board>
+    <board id="1" amount="10" date="14.08.23" price="420.00">
+      <dim L="100.00" l="20.00" />
+    </board>
+    <board id="2" amount="5" date="05.04.22" price="350.00">
+      <dim L="100.00" l="100.00" />
+    </board>
+    <board id="3" amount="3" date="17.02.23" price="400.00">
+      <dim L="150.00" l="40.00" />
+    </board>
+  </client>
+  <client id="3">
+    <board id="0" amount="40" date="14.05.22" price="600.00">
+      <dim L="30.00" l="15.00" />
+    </board>
+  </client>
+  <client id="4">
+    <board id="0" amount="10" date="14.06.23" price="300.00">
+      <dim L="50.00" l="40.00" />
+    </board>
+    <board id="1" amount="5" date="04.05.23" price="500.00">
+      <dim L="50.00" l="100.00" />
+    </board>
+    <board id="2" amount="3" date="16.05.22" price="950.00">
+      <dim L="120.00" l="60.00" />
+    </board>
+  </client>
+</clients>
