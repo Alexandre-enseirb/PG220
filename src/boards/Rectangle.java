@@ -41,4 +41,20 @@ class Rectangle extends Polygon {
     boolean overlaps(Polygon p){
         return false; // TODO
     }
+
+    double getLength() {
+        double ret = this.p2.getX() - this.p1.getX();
+        if (ret < 0){
+            ret *=-1;
+        }
+        return ret;
+    }
+
+    double getWidth() {
+        double ret = this.p2.getY() - this.p1.getY();
+        if (ret < 0){
+            ret*=-1;
+        }
+        return ret;
+    }
 }

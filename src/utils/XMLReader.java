@@ -8,6 +8,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 class XMLReader implements IReader {
     private XMLStreamReader r;
@@ -21,20 +22,28 @@ class XMLReader implements IReader {
     public ArrayList<ArrayList<Object>> read(String filename) {
         FileInputStream file = null;
         IGenerable rdb;
-        ArrayList<ArrayList<Object>> lesUsers = new ArrayList<>();
+        ArrayList<ArrayList<Object>> listUsers = new ArrayList<>();
         try {
             file = new FileInputStream(filename);
             r = XMLInputFactory.newInstance().createXMLStreamReader(file);
-
+            String name="";
             while (r.hasNext()) {
                 if (r.getEventType()==1) { //XMLStreamConstants.START_ELEMENT
-                    if (r.getName().toString() == "client" || r.getName().toString() == "fournisseur") {
-                        lesUsers.add(readUsers(r));
+                    name = r.getName().toString();
+                    System.out.println(name);
+                    if (r.getName().toString() == "client" || r.getName().toString() == "supplier") {
+                        listUsers.add(readUsers(r));
                     } else {
                         r.next();
                     }
 
                 } else {
+                    try{
+                        System.out.println("============="+r.getLocalName());
+                    }catch(IllegalStateException e){
+                        r.next();
+                        continue;
+                    }
                     r.next();
                 }
             }
@@ -42,7 +51,7 @@ class XMLReader implements IReader {
         } catch (FileNotFoundException | XMLStreamException e) {
             e.printStackTrace();
         }
-        return lesUsers;
+        return listUsers;
     }
 
     /**
@@ -57,21 +66,19 @@ class XMLReader implements IReader {
         Users.add(r.getAttributeValue(0));
 
         IGenerable c = null;
-
+        String name="";
         try {
             while (r.hasNext()) {
 
                 if (r.next() == XMLStreamConstants.START_ELEMENT)
                 {
+                    name = r.getName().toString();
+                    if (r.getName().toString() == "board"){
 
-                    if (r.getName().toString() == "planche" || r.getName().toString() == "panneau"){
-
-                        ArrayList<String> p = readPlanche(r);
+                        ArrayList<String> p = readBoard(r);
                         Users.add(p);
 
                     }else{
-
-
                         return Users;
                     }
 
@@ -96,22 +103,36 @@ class XMLReader implements IReader {
      * @param r an XMLStreamReader used to read the fields
      * @return a list of values read
      */
-    public ArrayList<String> readPlanche(XMLStreamReader r){
+    public ArrayList<String> readBoard(XMLStreamReader r){
 
         ArrayList<String> p = new ArrayList<>();
 
         int id =Integer.parseInt(r.getAttributeValue(0));
-        p.add(r.getAttributeValue(0));
-        p.add(r.getAttributeValue(1));
-        p.add(r.getAttributeValue(2));
-        p.add(r.getAttributeValue(3));
+        p.add(r.getAttributeValue(0));                                  // data(0)
+        p.add(r.getAttributeValue(1));                                  // data(1)
+        p.add(r.getAttributeValue(2));                                  // data(2)
+        p.add(r.getAttributeValue(3));                                  // data(3)
+        String name ="";
         try {
             while (r.hasNext()){
                 if(r.next() == XMLStreamConstants.START_ELEMENT){
+                    name=r.getLocalName();
+                    if("dim".equalsIgnoreCase(name)){
+                        p.add("rect");                                      // data(4)
+                        p.add(r.getAttributeValue(0));                   // data(5)
+                        p.add(r.getAttributeValue(1));                   // data(6)
+                    }
+                    if ("p".equalsIgnoreCase(name)){
+                        int counter = 0;
+                        p.add("poly");                                      // data(4)
+                        while (r.hasNext() && r.getName().toString().equals("p")){
+                            counter++;
+                            p.add(r.getAttributeValue(0));                   // data(5)
+                            p.add(r.getAttributeValue(1));                   // data(6)
+                        }
+                        p.add(Integer.toString(counter));
+                        
 
-                    if("dim".equalsIgnoreCase(r.getLocalName())){
-                        p.add(r.getAttributeValue(0));
-                        p.add(r.getAttributeValue(1));
                     }
 
                     return p;
@@ -124,7 +145,6 @@ class XMLReader implements IReader {
 
         return p;
     }
-
 
 
 

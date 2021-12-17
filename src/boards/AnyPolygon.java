@@ -46,4 +46,34 @@ class AnyPolygon extends Polygon {
     boolean overlaps(Polygon p){
         return false; // TODO
     }
+	
+	/**
+	 * gets the smallest covering rectangle for the polygon. Used to cut polygons
+	 * @return a Rectangle object representing the covering rectangle generated
+	 */
+	Rectangle getCoveringRectangle() {
+		double minX = Double.POSITIVE_INFINITY;
+		double minY = Double.POSITIVE_INFINITY;
+		double maxX = -1;
+		double maxY = -1;
+		double x = 0;
+		double y = 0;
+		for (Point p : this.getPoints()) {
+			x = p.getX();
+			y = p.getY();
+			if (x < minX) {
+				minX = x;
+			}
+			if (x > maxX) {
+				maxX = x;
+			}
+			if (y < minY) {
+				minY = y;
+			}
+			if (y > maxY) {
+				maxY = y;
+			}
+		}
+		return new Rectangle(new Point(minX, minY), new Point(maxX, maxY));
+	}
 }

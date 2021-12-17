@@ -11,7 +11,7 @@ import java.util.Scanner;
 import static java.lang.StrictMath.floor;
 
 /**
- * Object istantiated via the IWriter interface, used to write the data contained in an IWritable object to an SVG file
+ * Object instantiated via the IWriter interface, used to write the data contained in an IWritable object to an SVG file
  */
 public class SVGWriter implements IWriter {
 
@@ -34,6 +34,7 @@ public class SVGWriter implements IWriter {
     public void openFile(String filename, Scanner sc) {
         String[] array = filename.split("\\.");
         filename=array[0];
+        int add=-1;
         String extension="."+array[1];
         File tmp = new File(this.folder+filename+extension);
         boolean exists = tmp.exists();
@@ -47,7 +48,7 @@ public class SVGWriter implements IWriter {
             }
 
             if (ret.equalsIgnoreCase("n")) {
-                int add = 1;
+                add = 1;
                 /* ensures we create a file that does not exist yet */
                 while (tmp.exists()) {
                     tmp = new File(this.folder + filename + Integer.toString(add)+extension);
@@ -65,7 +66,12 @@ public class SVGWriter implements IWriter {
             e.printStackTrace();
         }
         try {
-            this.file = new FileOutputStream(this.folder+filename+extension, false);
+            if (add==-1){
+                this.file = new FileOutputStream(this.folder+filename+extension, false);
+            }else{
+                this.file = new FileOutputStream(this.folder+filename+Integer.toString(add)+extension, false);
+            }
+
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
@@ -101,12 +107,15 @@ public class SVGWriter implements IWriter {
 
         /* "beautifying" data */
         int textFontSize   = 16;
-        int originX        = 10;  /* starts drawing at the origin in x */
-        int originY        = 10;  /* same in y */
+        double originX        = 10.0;  /* starts drawing at the origin in x */
+        double originY        = 10.0;  /* same in y */
         int distRow        = 10; /* 10 px between each cut row */
-        int distCol        = 10; /* 10 px between each cut column */
-        int perRow         = 3;  /* number of cuts to display in each line */
-        int nbRow          = (int) floor(w.size() / 3) + 1; /* number of lines to prepare */
+        double distCol     = 10.0;
+        int perRow         = 1;  /* number of cuts to display in each line */
+        int nbRow          = (int) floor(w.size() / perRow) + 1; /* number of lines to prepare */
+        double maxH = maxHeight(w);
+        double maxL = maxLength(w);
+
         double totalHeight = maxHeight(w) * nbRow + distRow * (nbRow-1) + originX;
         double totalLength = maxLength(w) * perRow + distCol * (perRow -1) + originY ;
 
@@ -114,19 +123,21 @@ public class SVGWriter implements IWriter {
         // creating the canvas
 
         String out="<svg xmlns="+quote+"http://www.w3.org/2000/svg"+quote+" xmlns:xlink="+quote+"http://www.w3.org/1999/xlink"
-                +quote+" x="+quote+0+quote+" y="+quote+0+quote+" width=\"100%\" height=\""
+                +quote+" x="+quote+0+quote+" y="+quote+0+quote+" width=\""+Double.toString(totalLength)+"\" height=\""
                 +Double.toString(totalHeight+textFontSize)+"\">";
 
 
         /* position of first board */
-        int posX = originX;
-        int posY = originY;
+        Double posX = originX;
+        Double posY = originY+textFontSize;
 
         // size of the client board and supplier board
         String width = "0";
         String height = "0";
         String width2 = "0";
         String height2 = "0";
+        String cutPosX = "0";
+        String cutPosY = "0";
 
         // for when we will need an offset
         int offX = 0;
@@ -141,21 +152,31 @@ public class SVGWriter implements IWriter {
         int positionInRow = 0;
         int positionInCol = 0;
 
+        String uid = "not an id";
+        String prevuid="still not an id";
         for (IWritable export : w) {
             listS = export.toStr();
-            posX = originX + positionInRow * (int) (totalLength + distRow);
-            posY = originY + positionInCol * (int) (totalHeight + distCol) + textFontSize;
-            amount = listS.get(6);
+            amount = "1";
             width = listS.get(7);
-            height = listS.get(8);
+            height = listS.get(6);
             width2 = listS.get(15);
-            height2 = listS.get(16);
-            out += text("Cut no." + Integer.toString(++this.exportCounter) + " x" + amount, posX, posY - textFontSize / 2);
-            out += fullRectangle(posX, posY, width2, height2);
-            out += dashedRectangle(posX + offX, posY + offY, width, height);
+            height2 = listS.get(14);
+            posX = originX;
+            uid = listS.get(10)+":"+listS.get(12);
+            if (uid.equals(prevuid)){
+                posY -= (Double.parseDouble(height2) + distCol + textFontSize);
+            }else{
+                out += text("Cut no." + Integer.toString(++this.exportCounter) + " x" + amount, posX, posY - textFontSize / 2);
+                out += fullRectangle(posX, posY, width2, height2);
+            }
 
-            positionInRow = this.exportCounter % 3;
-            positionInCol = (int) floor(this.exportCounter / 3);
+            cutPosX = listS.get(18);
+            cutPosY = listS.get(20);
+
+            out += dashedRectangle(posX + Double.parseDouble(cutPosX), posY + Double.parseDouble(cutPosY), width, height);
+            posY += Double.parseDouble(height2) + distCol + textFontSize;
+            prevuid = uid;
+            positionInCol++;
         }
         out+="</svg>\n";
 
@@ -213,7 +234,7 @@ public class SVGWriter implements IWriter {
      * @param posY position along the y axis
      * @return String describing the text element
      */
-    String text(String textVal, int posX, int posY) {
+    String text(String textVal, double posX, double posY) {
         String fill="black";
         return "    <text x=\""+posX+"\" y=\""+posY+"\" fill=\""+fill+"\">"+textVal+"</text>";
     }
@@ -226,13 +247,13 @@ public class SVGWriter implements IWriter {
      * @param height height of the rectangle
      * @return String describing the rectangle
      */
-    String fullRectangle(int posX, int posY, String width, String height) {
+    String fullRectangle(double posX, double posY, String width, String height) {
         String fill = "white";
         String strokeColor = "black";
         String strokeWidth = ".5";
 
 
-        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+        return "    <rect x=\""+Double.toString(posX)+"\" y=\""+Double.toString(posY)+"\" width=\""
                 +width+"\" height=\""+height+"\" fill =\""+fill+"\" stroke=\""
                 +strokeColor+"\" stroke-width=\""+strokeWidth+"\"/>";
     }
@@ -246,13 +267,13 @@ public class SVGWriter implements IWriter {
      * @param fill color to use for the lines
      * @return String describing the rectangle
      */
-    String fullRectangle(int posX, int posY, String width, String height, String fill) {
+    String fullRectangle(double posX, double posY, String width, String height, String fill) {
 
         String strokeColor = "black";
         String strokeWidth = ".5";
 
 
-        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+        return "    <rect x=\""+Double.toString(posX)+"\" y=\""+Double.toString(posY)+"\" width=\""
                 +width+"\" height=\""+height+"\" fill =\""+fill+"\" stroke=\""
                 +strokeColor+"\" stroke-width=\""+strokeWidth+"\"/>";
     }
@@ -265,14 +286,14 @@ public class SVGWriter implements IWriter {
      * @param height height of the rectangle
      * @return String describing the rectangle
      */
-    String dashedRectangle(int posX, int posY, String width, String height) {
+    String dashedRectangle(double posX, double posY, String width, String height) {
         String fill = "white";
         String strokeColor = "black";
         String strokeWidth = ".5";
         String strokeDasharray = "2,2";
 
 
-        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+        return "    <rect x=\""+Double.toString(posX)+"\" y=\""+Double.toString(posY)+"\" width=\""
                 +width+"\" height=\""+height+"\" fill =\""+fill+"\" stroke=\""
                 +strokeColor+"\" stroke-width=\""+strokeWidth+"\" stroke-dasharray=\""+strokeDasharray+"\"/>";
     }
@@ -286,14 +307,14 @@ public class SVGWriter implements IWriter {
      * @param fill color to use for the lines
      * @return String describing the rectangle
      */
-    String dashedRectangle(int posX, int posY, String width, String height, String fill) {
+    String dashedRectangle(double posX, double posY, String width, String height, String fill) {
 
         String strokeColor = "black";
         String strokeWidth = ".5";
         String strokeDasharray = "2,2";
 
 
-        return "    <rect x=\""+Integer.toString(posX)+"\" y=\""+Integer.toString(posY)+"\" width=\""
+        return "    <rect x=\""+Double.toString(posX)+"\" y=\""+Double.toString(posY)+"\" width=\""
                 +width+"\" height=\""+height+"\" fill =\""+fill+"\" stroke=\""
                 +strokeColor+"\" stroke-width=\""+strokeWidth+"\" stroke-dasharray=\""+strokeDasharray+"\"/>";
     }

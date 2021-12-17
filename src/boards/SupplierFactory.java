@@ -38,8 +38,8 @@ public class SupplierFactory implements IFactory{
                     nbr = Integer.parseInt(info_Planche.get(1));
                     date = info_Planche.get(2);
                     prix = Double.parseDouble(info_Planche.get(3));
-                    len = Double.parseDouble(info_Planche.get(4));
-                    wid = Double.parseDouble(info_Planche.get(5));
+                    len = Double.parseDouble(info_Planche.get(5));
+                    wid = Double.parseDouble(info_Planche.get(6));
 
                 } catch(NumberFormatException e) {
                     System.out.println("Invalid field. Supplier skipped.");

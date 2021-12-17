@@ -92,7 +92,6 @@ class Cut {
      * Tests each unfulfilled order of the client and each offer of the supplier, stores the matches and buys the
      * corresponding amount of boards to the supplier
      */
-
     void hasValidCuts(){
         CutElement cutElem;
         ArrayList<BoardData> supplierBoards =  this.supplier.getBoards();
@@ -117,11 +116,7 @@ class Cut {
                     continue; // too expensive for the client
                 }
 
-                // AMOUNT
-                if (cb.getAmount().getValue() > sb.getAmount().getValue()) {
-                    System.out.println(tab +"Client id " + this.client.id + " board " + cb.id+ " Supplier " + this.supplier.id +" board "+ sb.id + " Not enough board to buy");
-                    continue; // supplier can't supply enough
-                }
+
 
                 // DIMENSIONS
                 if (    (cb.getLength().getValue() > sb.getLength().getValue() ||
@@ -170,6 +165,98 @@ class Cut {
         boardsCleanup();
     }
 
+
+
+     /**
+     * first optimized algorithm to find valid cuts
+     * @param listCB list of all the clients' boards, ordered in terms of length, then width
+     * @param listSB list of all the suppliers' boards, ordered in terms of length, then width
+     */
+    void findValidCutsOptimized(ArrayList<ClientBoard> listCB, ArrayList<SupplierBoard> listSB) {
+        SubBoard wholeBoard = null;
+        for (SupplierBoard sb: listSB) {
+            wholeBoard = new SubBoard(sb, sb.getLength(), sb.getWidth(), 0, 0);
+            placeOnBoard(listCB, wholeBoard);
+        }
+    }
+
+    /**
+     * tries to place any board from the clients on the current board
+     * @param listCB list of all the clients' boards, ordered in terms of length, then width
+     * @param sb the place left on a supplier board, treated as if it was a standalone board
+     */
+    void placeOnBoard(ArrayList<ClientBoard> listCB, SubBoard sb) {
+        String tab="    ";
+        boolean worked=false;
+        ClientBoard valid = null;
+        int nextPosX = 0;
+        int nextPosY = 0;
+        for (ClientBoard cb : listCB) {
+            // DATE
+            if (!cb.getDate().comesAfter(sb.getDate())) {
+                //System.out.println(tab+cb.id+"Delays not working.");
+                continue; // won't be done in the given delays
+            }
+
+            // PRICE
+            if (cb.getPrice().getValue() < sb.getPrice()) {
+                continue; // too expensive for the client
+            }
+
+
+            // DIMENSIONS
+            if (    (cb.getLength().getValue() > sb.getLength() ||
+                     cb.getWidth().getValue() > sb.getWidth() ) &&
+                    (cb.getWidth().getValue() > sb.getLength()  ||
+                     cb.getLength().getValue() > sb.getWidth())    )
+            {
+                continue; // does not fit in length
+            }
+
+            int clientPtr = cb.getNumber();
+            int supplierPtr = sb.getNumber();
+
+            // if we get here, everything is okay.
+
+            CutElement cutElem = new CutElement(cb.getOwnerId(), cb.getId(), clientPtr,
+                    sb.getOwnerId(), sb.getId(), supplierPtr,
+                    cb.getLength().getValue(), cb.getWidth().getValue(),
+                    sb.getLength(), sb.getWidth(),
+                    0, 0);
+            System.out.println("Valid cut");
+            this.cuts.add(cutElem);
+            try {
+                cb.remove(1);
+            } catch (NoMoreBoardsException e) {
+                this.clientBoardsToRemove.add(cb);
+            }
+            try {
+                sb.remove(1);
+            } catch (NoMoreBoardsException e) {
+                this.supplierBoardsToRemove.add(sb.getParent());
+            }
+            valid = cb;
+            worked=true;
+            break; // if we get here, a cut was succesfully added.
+        }
+        if (worked){
+            SubBoard sb1 = new SubBoard(sb.getParent(),new Dimension(sb.getLength() - valid.getLength().getValue()),
+                    valid.getWidth(), nextPosX, sb.getPosY());
+            SubBoard sb2 = new SubBoard(sb.getParent(), new Dimension(sb.getLength()),
+                    new Dimension(sb.getWidth() - valid.getWidth().getValue()),
+                    sb.getPosX(), nextPosY);
+            boardsCleanup();
+            placeOnBoard(listCB, sb1);
+            placeOnBoard(listCB, sb2);
+        }else{
+            return;
+        }
+
+    }
+
+    /**
+     * removes all cut boards from the actors' lists
+     */
     void boardsCleanup() {
         for (BoardData cb : this.clientBoardsToRemove) {
             this.client.removeBoard(cb);

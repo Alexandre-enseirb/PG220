@@ -38,10 +38,13 @@ class ClientBoard extends BoardData {
      */
      ClientBoard(int oid, int id, int amount, String date,double price,double length,double width) {
         super(oid, id,amount,date,price,length,width);
-    }
-    ClientBoard(int oid, int id, int amount, String date,double price,double length,double width,int number) {
+        this.shape=null;
+     }
+
+     ClientBoard(int oid, int id, int amount, String date,double price,double length,double width,int number) {
         super(oid, id,amount,date,price,length,width,number);
-    }
+        this.shape=null;
+     }
 
 
     /**
@@ -84,5 +87,9 @@ class ClientBoard extends BoardData {
             }
         }
         return boards;
+    }
+
+    void setShape(Polygon polygon) {
+        this.shape = polygon;
     }
 }

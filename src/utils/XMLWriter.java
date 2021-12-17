@@ -27,6 +27,7 @@ public class XMLWriter implements IWriter {
      */
     public void openFile(String filename, Scanner sc) {
         String[] array = filename.split("\\.");
+        int add=-1; // not set for now
         filename=array[0];
         String extension="."+array[1];
         File tmp = new File(this.folder+filename+extension);
@@ -40,7 +41,7 @@ public class XMLWriter implements IWriter {
             }
 
             if (ret.equalsIgnoreCase("n")) {
-                int add = 1;
+                add = 1; // set, we were prompted to erase the file
                 /* ensures we create a file that does not exist yet */
                 while (tmp.exists()) {
                     tmp = new File(this.folder + filename + Integer.toString(add) + extension);
@@ -58,7 +59,12 @@ public class XMLWriter implements IWriter {
         }
         try {
             System.out.println(this.folder+filename+extension);
-            this.file = new FileOutputStream(this.folder+filename+extension, this.append);
+            if (add==-1) {
+                this.file = new FileOutputStream(this.folder + filename + extension, this.append);
+            }else {
+                this.file = new FileOutputStream(this.folder + filename +Integer.toString(add)+ extension, this.append);
+            }
+
         }
         catch(FileNotFoundException e){
             e.printStackTrace();
@@ -107,30 +113,7 @@ public class XMLWriter implements IWriter {
                     +data.get(19)+"="+data.get(20)+"/"+endElem;
             out+=tab+startElem+"/Cut"+endElem;
         }
-        /*
-        int boardsAmount;
-        int ptr=3;
-        // begin XLM file
-        String out;
-        // create Cut child
-        out =tab+"<Cut id="+quote+data.get(0)+quote+">"+newline;
-        // create Client subchild
-        out +=tab+tab+"<Client id="+quote+data.get(1)+quote+"/>"+newline;
-        // create Supplier subchild
-        out +=tab+tab+"<Supplier id="+quote+data.get(2)+quote+"/>"+newline;
-        // create Boards subchilds
-        boardsAmount = data.size();
 
-        while(ptr<boardsAmount) {
-            out+=tab+tab+"<Board id="+quote+data.get(ptr++)+quote
-                    +" amount="+quote+data.get(ptr++)+quote
-                    +" date="+quote+data.get(ptr++)+quote
-                    +" price="+quote+data.get(ptr++)+quote+">"+newline;
-            out+=tab+tab+tab+"<Dim l="+quote+data.get(ptr++)+quote+" L="+quote+data.get(ptr++)+quote+"/>"+newline;
-            out+=tab+tab+"</Board>"+newline;
-        }
-        out+=tab+"</Cut>"+newline;
-        */
         byte[] strToBytes = out.getBytes();
         try {
             this.file.write(strToBytes);

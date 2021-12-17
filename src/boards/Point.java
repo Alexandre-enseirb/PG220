@@ -8,18 +8,18 @@ class Point {
     /**
      * Coordinate along the x-axis
      */
-    private int x;
+    private double x;
     /**
      * Coordinate along the y-axis
      */
-    private int y;
+    private double y;
 
     Point(){
         this.x=0;
         this.y=0;
     }
 
-    Point(int x, int y){
+    Point(double x, double y){
         this.x=x;
         this.y=y;
     }
@@ -36,5 +36,12 @@ class Point {
             return false;
         return true;
     }
-
+	
+	double getX() {
+		return this.x;
+	}
+	
+	double getY() {
+        return this.y;
+    }
 }
