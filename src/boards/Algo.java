@@ -66,7 +66,8 @@ public class Algo {
             System.out.println(d.getOwnerId()+" length is "+ d.getLength().getValue()+" "+d.getWidth().getValue()+"no: "+d.getNumber());
         }
         //cutTest(listC, listS, path.toString());
-        etap3_opti(lesboards,lespanneaux,path.toString());
+       // etap3_opti(lesboards,lespanneaux,path.toString());
+        etape3_1er(lesboards,lespanneaux,path.toString());
     }
 
     /**
@@ -173,6 +174,70 @@ public class Algo {
         svgw.closeFile();
         sc.close();
 
+    }
+    static void etape3_1er(ArrayList<BoardData> ClientsDemand, ArrayList<BoardData> SupplierDemand, String path) {
+        String filenameXML = path + "/export.XML";
+        String filenameSVG = path + "/export.SVG";
+        Scanner sc = new Scanner(System.in);
+        IWriter w = IWriter.instantiateXMLWriter(false);
+        IWriter svgw = IWriter.instantiateSVGWriter();
+        w.openFile(filenameXML, sc);
+        svgw.openFile(filenameSVG, sc);
+        ArrayList<IWritable> cuts = new ArrayList<>();
+        int flags = -1;
+        for (BoardData sb : SupplierDemand) {
+
+            double Ls = sb.length.getValue();
+            double Ws = sb.width.getValue();
+            double x = 0.00;
+            double y = 0.00;
+            //double premierL = 0.00;
+           // System.out.println(ClientsDemand.get(ClientsDemand.size() - 1).getLength().getValue());
+            while (Ws > ClientsDemand.get(ClientsDemand.size() - 1).getWidth().getValue() && flags != 0 && Ls>ClientsDemand.get(ClientsDemand.size()-1).getWidth().getValue()) {
+                // compare with the long and width min
+                flags = 0;
+                for (BoardData cb : ClientsDemand) {
+                    flags = flags + cb.getAmount().getValue();
+                    if (cb.getAmount().getValue() > 0) {
+                        if (cb.width.getValue() <= Ws && cb.length.getValue() <= Ls) {
+                            // taille parfait, on peut decoupe
+                            // decoupe
+                            CutElement cute = new CutElement(cb.getOwnerId(), cb.getId(), cb.getNumber(),
+                                    sb.getOwnerId(), sb.getId(), sb.getNumber(),
+                                    cb.getLength().getValue(), cb.getWidth().getValue(),
+                                    sb.getLength().getValue(), sb.getWidth().getValue(),
+                                    x, y);
+                            cuts.add(cute);
+
+                            //
+
+                            x = x + cb.length.getValue();
+                            y = y + cb.width.getValue();
+                            Ls = Ls - cb.length.getValue();
+                            Ws = Ws - cb.width.getValue();
+                            cb.setAmountValue(cb.getAmount().getValue() - 1);
+                            System.out.println("decoupe 1 in " + sb.getDate().toString() + "longuer " + cb.getLength().getValue() + "width " + cb.getWidth().getValue());
+                        }
+                    } else {
+                        continue;
+                    }
+                    //System.out.println("y : "+y+ " x: "+x);
+                }
+
+                // quand une ligne es
+
+            }
+
+            System.out.println("im in sb " + sb.id);
+
+
+        }
+        System.out.println("jj");
+        w.writeToFile(cuts);
+        svgw.writeToFile(cuts);
+        w.closeFile();
+        svgw.closeFile();
+        sc.close();
     }
 }
 
